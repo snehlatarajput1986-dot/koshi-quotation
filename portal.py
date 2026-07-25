@@ -22,12 +22,12 @@ st.write("Niche kisi bhi tool par click karke direct page open karein:")
 
 st.markdown("---")
 
-# Note: In URLs ko apni Streamlit deployed apps ke links se update kar sakte hain
-st.link_button("📄 Open Quotation Generator (L1, L2, L3)", "https://share.streamlit.io") 
+# Exact Direct Links mapped from your Streamlit dashboard
+st.link_button("📄 Open Quotation Generator (L1, L2, L3)", "https://koshi-quotation-6g7gym9uow5juafcpvrccs.streamlit.app/") 
 
 st.write("") 
 
-st.link_button("📝 Open Letterhead Generator", "https://share.streamlit.io")
+st.link_button("📝 Open Letterhead Generator", "https://koshi-letterhead.streamlit.app/")
 
 st.markdown("---")
 st.caption("Powered by Koshi Enterprises")
