@@ -3,84 +3,102 @@ import streamlit as st
 # Page Configuration
 st.set_page_config(
     page_title="Koshi Enterprises Portal",
-    page_icon="🏢",
+    page_icon="🔮",
     layout="wide",
     initial_sidebar_state="expanded"
 )
 
-# Exact Matching Theme CSS
+# Custom CSS for Futuristic Dark Purple Neon Theme
 st.markdown("""
     <style>
-    /* Main Background & Fonts */
+    /* Main Dark Background with Neon Gradient Glow */
     .stApp {
-        background-color: #FAFAFC;
+        background: radial-gradient(circle at top center, #2e0854 0%, #0d021a 70%, #05010a 100%);
+        color: #ffffff;
     }
     
-    /* Sleek Blue Hero Banner */
+    /* Sidebar Styling */
+    section[data-testid="stSidebar"] {
+        background-color: #0b0314;
+        border-right: 1px solid #3b1366;
+    }
+    
+    /* Glowing Hero Banner */
     .hero-box {
-        background: linear-gradient(90deg, #2563EB 0%, #3B82F6 100%);
+        background: linear-gradient(135deg, rgba(147, 51, 234, 0.2) 0%, rgba(79, 70, 229, 0.2) 100%);
+        border: 1px solid #a855f7;
         border-radius: 16px;
-        padding: 30px;
-        color: white;
-        box-shadow: 0 10px 25px -5px rgba(37, 99, 235, 0.25);
-        margin-bottom: 25px;
+        padding: 35px;
+        text-align: center;
+        box-shadow: 0 0 25px rgba(168, 85, 247, 0.3);
+        margin-bottom: 30px;
     }
     .status-pill {
-        background: rgba(255, 255, 255, 0.2);
-        color: #FFFFFF;
-        padding: 4px 12px;
+        background: #a855f7;
+        color: #ffffff;
+        padding: 4px 14px;
         border-radius: 20px;
         font-size: 12px;
-        font-weight: 600;
+        font-weight: 700;
         display: inline-block;
         margin-bottom: 12px;
+        box-shadow: 0 0 10px #a855f7;
     }
     .hero-title {
-        font-size: 28px;
+        font-size: 32px;
         font-weight: 800;
-        color: #FFFFFF;
-        margin-bottom: 6px;
+        color: #ffffff;
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
     }
     .hero-desc {
-        color: #E0E7FF;
-        font-size: 14px;
-    }
-    
-    /* Clean Metric Boxes */
-    div[data-testid="stMetric"] {
-        background-color: #FFFFFF;
-        padding: 15px 20px;
-        border-radius: 12px;
-        border: 1px solid #E5E7EB;
-        box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        color: #d8b4fe;
+        font-size: 15px;
     }
 
-    /* Clean Module Cards */
+    /* Metric Cards Glow */
+    div[data-testid="stMetric"] {
+        background: rgba(20, 7, 38, 0.8);
+        padding: 15px 20px;
+        border-radius: 12px;
+        border: 1px solid #581c87;
+        box-shadow: 0 4px 15px rgba(147, 51, 234, 0.15);
+    }
+
+    /* Module Cards Neon Effect */
     .module-card {
-        background: #FFFFFF;
+        background: rgba(23, 10, 41, 0.9);
         border-radius: 14px;
-        padding: 20px;
-        border: 1px solid #E5E7EB;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.02);
-        margin-bottom: 10px;
+        padding: 24px;
+        border: 1px solid #7e22ce;
+        box-shadow: 0 0 15px rgba(126, 34, 206, 0.2);
+        margin-bottom: 15px;
     }
     .module-title {
-        font-size: 18px;
+        font-size: 20px;
         font-weight: 700;
-        color: #1F2937;
+        color: #f3e8ff;
         margin-bottom: 8px;
     }
     .module-desc {
-        font-size: 13px;
-        color: #6B7280;
+        font-size: 14px;
+        color: #c084fc;
         line-height: 1.5;
+    }
+    
+    /* Neon Link Buttons */
+    .stButton>button, div.stLinkButton>a {
+        background: linear-gradient(90deg, #9333ea 0%, #c084fc 100%) !important;
+        color: white !important;
+        border: none !important;
+        font-weight: bold !important;
+        box-shadow: 0 0 12px rgba(168, 85, 247, 0.5) !important;
     }
     </style>
 """, unsafe_allow_html=True)
 
 # ----------------- SIDEBAR -----------------
 with st.sidebar:
-    st.markdown("### 🏢 Koshi Enterprises")
+    st.markdown("### 🔮 Koshi Enterprises")
     st.caption("Central Workspace Portal")
     
     st.divider()
@@ -91,7 +109,6 @@ with st.sidebar:
     
     st.divider()
     
-    # Updated Support & Info Details
     st.markdown("📞 **Support & Info**")
     st.caption("For system updates or technical issues, contact admin team.")
     
@@ -105,7 +122,7 @@ with st.sidebar:
 # Top Hero Banner
 st.markdown("""
     <div class="hero-box">
-        <div class="status-pill">🟢 System Operational & Online</div>
+        <div class="status-pill">⚡ SYSTEM ONLINE</div>
         <div class="hero-title">🏢 Koshi Enterprises Workspace</div>
         <div class="hero-desc">Centralized portal to access all official business documents and generation tools.</div>
     </div>
