@@ -233,8 +233,6 @@ with col2:
         use_container_width=True
     )
     components.html(quotation_html, height=750, scrolling=True)
-import streamlit as st
-
 # --- Help Pop-up Feature ---
 st.markdown("""
 <style>
