@@ -1,5 +1,6 @@
 import streamlit as st
 import streamlit.components.v1 as components
+import pandas as pd
 
 st.set_page_config(page_title="KOSHI ENTERPRISES - Quotation Generator", page_icon="📄", layout="wide")
 
@@ -13,13 +14,44 @@ with col1:
     q_date = st.text_input("Date", value="25-07-2026")
     billed_to = st.text_area("Billed To", value="DPO SSA MADHEPURA\nMadhepura, Bihar", height=90)
     
-    st.subheader("📦 Item Details")
-    item_desc = st.text_input("Item Description", value="HP ALL IN ONE 27-CR0417IN (SN-8CC5261H81)")
-    qty = st.number_input("Quantity", value=1, min_value=1)
-    rate = st.number_input("Rate (₹)", value=87500.0, step=500.0)
+    st.subheader("📦 Item Details (Add/Remove Rows Below)")
     
-    total_amt = qty * rate
-    
+    # Default items
+    default_items = pd.DataFrame([
+        {"DESCRIPTION": "HP ALL IN ONE 27-CR0417IN (SN-8CC5261H81)", "QTY": 1, "RATE": 87500.0}
+    ])
+
+    # Table where you can add multiple rows using "+" button
+    edited_df = st.data_editor(
+        default_items,
+        num_rows="dynamic",
+        use_container_width=True,
+        column_config={
+            "QTY": st.column_config.NumberColumn("QTY", min_value=1, step=1),
+            "RATE": st.column_config.NumberColumn("RATE (₹)", min_value=0.0, format="₹%.2f"),
+        }
+    )
+
+    items_html_rows = ""
+    grand_total = 0.0
+
+    for idx, row in edited_df.iterrows():
+        desc = row.get("DESCRIPTION", "")
+        qty = row.get("QTY", 1) or 1
+        rate = row.get("RATE", 0.0) or 0.0
+        amount = qty * rate
+        grand_total += amount
+        
+        items_html_rows += f"""
+        <tr>
+            <td style="text-align:center;">{idx + 1}</td>
+            <td>{desc}</td>
+            <td style="text-align:center;">{qty} PCS</td>
+            <td style="text-align:right;">₹{rate:,.2f}</td>
+            <td style="text-align:right;">₹{amount:,.2f}</td>
+        </tr>
+        """
+
     st.subheader("📝 Terms & Amount in Words")
     amt_words = st.text_input("Amount in Words", value="Rupees Eighty-Seven Thousand Five Hundred Only")
 
@@ -66,13 +98,13 @@ with col2:
             .item-table th {{
                 background-color: #002b80 !important;
                 color: white !important;
-                padding: 10px;
+                padding: 8px 10px;
                 text-align: left;
                 font-size: 13px;
             }}
             .item-table td {{
                 border: 1px solid #ddd;
-                padding: 10px;
+                padding: 8px 10px;
                 font-size: 13px;
             }}
             .total-box {{
@@ -93,7 +125,7 @@ with col2:
                 <h1 style="margin:0; font-size:24px;">KOSHI ENTERPRISES</h1>
                 <p style="margin:5px 0 0 0; font-size:12px;">Sukhasan Uttarwari, Ward No. 07, Madhepura, Bihar - 852113</p>
                 <p style="margin:2px 0 0 0; font-size:12px;">GSTIN: 10CJAPK9167R1ZQ | Mobile: +91 8541887622</p>
-                <h3 style="margin:10px 0 0 0; background:#ff9900; color:#000; padding:3px; display:inline-block; border-radius:3px; font-size:14px;">QUOTATION</h3>
+                <h3 style="margin:10px 0 0 0; background:#ff9900; color:#000; padding:3px 8px; display:inline-block; border-radius:3px; font-size:14px;">QUOTATION</h3>
             </div>
 
             <table style="width:100%; font-size:13px; margin-bottom:15px;">
@@ -112,26 +144,20 @@ with col2:
             <table class="item-table">
                 <thead>
                     <tr>
-                        <th style="width:8%;">SL</th>
+                        <th style="width:8%; text-align:center;">SL</th>
                         <th style="width:52%;">DESCRIPTION OF GOODS</th>
-                        <th style="width:10%;">QTY</th>
-                        <th style="width:15%;">RATE (₹)</th>
-                        <th style="width:15%;">AMOUNT (₹)</th>
+                        <th style="width:10%; text-align:center;">QTY</th>
+                        <th style="width:15%; text-align:right;">RATE (₹)</th>
+                        <th style="width:15%; text-align:right;">AMOUNT (₹)</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>{item_desc}</td>
-                        <td>{qty} PCS</td>
-                        <td>₹{rate:,.2f}</td>
-                        <td>₹{total_amt:,.2f}</td>
-                    </tr>
+                    {items_html_rows}
                 </tbody>
             </table>
 
             <div class="total-box">
-                GRAND TOTAL: ₹{total_amt:,.2f}
+                GRAND TOTAL: ₹{grand_total:,.2f}
             </div>
 
             <p style="font-size:12px; margin-top:10px;"><b>AMOUNT IN WORDS:</b> {amt_words}</p>
@@ -160,4 +186,4 @@ with col2:
         use_container_width=True
     )
 
-    components.html(quotation_html, height=650, scrolling=True)
+    components.html(quotation_html, height=700, scrolling=True)
