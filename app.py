@@ -1,5 +1,4 @@
 import streamlit as st
-import streamlit.components.v1 as components
 import pandas as pd
 
 st.set_page_config(page_title="Custom Multi-Format Quotation Generator", page_icon="📄", layout="wide")
@@ -13,6 +12,14 @@ comp_selection = st.sidebar.radio(
      "2. R.T. ENTERPRISES (L2)", 
      "3. NEW MANORMA ENTERPRISES (L3)"]
 )
+
+# --- SIDEBAR HELP & SUPPORT SECTION (100% VISIBLE & WORKING) ---
+st.sidebar.markdown("---")
+st.sidebar.markdown("### 🎧 Help & Support")
+with st.sidebar.expander("Click to get Help"):
+    st.markdown("Need help with this app? Chat with us directly on WhatsApp.")
+    whatsapp_url = "https://wa.me/918864097233?text=Hello,%20mujhe%20is%20quotation%20generator%20ke%20bare%20me%20baat%20karni%20hai"
+    st.markdown(f'<a href="{whatsapp_url}" target="_blank"><button style="width:100%; background-color:#25D366; color:white; padding:10px; border:none; border-radius:5px; font-weight:bold; cursor:pointer; margin-top:5px;">💬 WhatsApp Chat</button></a>', unsafe_allow_html=True)
 
 col1, col2 = st.columns([1, 1])
 
@@ -232,119 +239,5 @@ with col2:
         mime="text/html",
         use_container_width=True
     )
+    import streamlit.components.v1 as components
     components.html(quotation_html, height=750, scrolling=True)
-
-# --- FLOATING WHATSAPP HELP POP-UP COMPONENT ---
-whatsapp_widget_html = """
-<!DOCTYPE html>
-<html>
-<head>
-<style>
-.help-btn {
-    position: fixed;
-    bottom: 25px;
-    right: 25px;
-    background-color: #25D366;
-    color: white;
-    border-radius: 50%;
-    width: 60px;
-    height: 60px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-    cursor: pointer;
-    z-index: 999999;
-    font-size: 28px;
-    transition: transform 0.2s ease;
-}
-.help-btn:hover {
-    transform: scale(1.08);
-}
-.modal-overlay {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.6);
-    z-index: 1000000;
-    justify-content: center;
-    align-items: center;
-}
-.modal-content {
-    background-color: #1e1e1e;
-    width: 85%;
-    max-width: 380px;
-    border-radius: 12px;
-    padding: 20px;
-    color: white;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.5);
-    position: relative;
-    font-family: Arial, sans-serif;
-}
-.close-btn {
-    position: absolute;
-    top: 12px;
-    right: 16px;
-    font-size: 22px;
-    cursor: pointer;
-    color: #aaa;
-}
-.close-btn:hover {
-    color: #fff;
-}
-.wa-link-btn {
-    display: block;
-    background: #25D366;
-    color: white;
-    padding: 12px;
-    border-radius: 6px;
-    text-align: center;
-    text-decoration: none;
-    font-weight: bold;
-    margin-top: 15px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-}
-.wa-link-btn:hover {
-    background: #20ba5a;
-}
-</style>
-</head>
-<body>
-
-<div class="help-btn" onclick="openModal()" title="Need Help? Chat on WhatsApp">💬</div>
-
-<div id="helpModal" class="modal-overlay">
-    <div class="modal-content">
-        <span class="close-btn" onclick="closeModal()">&times;</span>
-        <h3 style="margin-top:0; color:#25D366;">How can we help? 👋</h3>
-        <p style="color: #bbb; font-size: 13px;">Send us a message on WhatsApp. We typically reply in a few minutes.</p>
-        <hr style="border-color: #333; margin: 15px 0;">
-        <a class="wa-link-btn" href="https://wa.me/918864097233?text=Hello,%20mujhe%20is%20quotation%20generator%20ke%20bare%20me%20baat%20karni%20hai" target="_blank">
-            💬 WhatsApp par Message Karein
-        </a>
-    </div>
-</div>
-
-<script>
-function openModal() {
-    document.getElementById("helpModal").style.display = "flex";
-}
-function closeModal() {
-    document.getElementById("helpModal").style.display = "none";
-}
-window.onclick = function(event) {
-    var modal = document.getElementById("helpModal");
-    if (event.target == modal) {
-        modal.style.display = "none";
-    }
-}
-</script>
-
-</body>
-</html>
-"""
-
-components.html(whatsapp_widget_html, height=0, width=0)
