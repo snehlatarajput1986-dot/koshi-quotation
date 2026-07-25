@@ -24,11 +24,11 @@ st.markdown("""
         margin-bottom: 25px;
     }
     .card {
-        background-color: #F3F4F6;
+        background-color: #F8FAFC;
         padding: 20px;
         border-radius: 12px;
         border-left: 5px solid #2563EB;
-        box-shadow: 2px 2px 10px rgba(0,0,0,0.05);
+        box-shadow: 2px 2px 8px rgba(0,0,0,0.05);
         margin-bottom: 15px;
     }
     </style>
@@ -36,14 +36,14 @@ st.markdown("""
 
 # Header Section
 st.markdown('<div class="main-title">🏢 KOSHI ENTERPRISES WEB PORTAL</div>', unsafe_allow_html=True)
-st.markdown('<div class="sub-title">Aapka central workspace — Kise tool ko open karne ke liye niche select karein:</div>', unsafe_allow_html=True)
+st.markdown('<div class="sub-title">Aapka central workspace — Kisi bhi tool ko open karne ke liye niche click karein:</div>', unsafe_allow_html=True)
 
 st.divider()
 
 # Quick Metrics Row
 col1, col2, col3 = st.columns(3)
 col1.metric(label="📊 Quick Status", value="Active")
-col2.metric(label="📄 Tools Available", value="2")
+col2.metric(label="📑 Tools Available", value="2")
 col3.metric(label="🌐 System", value="Online")
 
 st.divider()
@@ -58,9 +58,8 @@ with col_a:
             <p>Generate L1, L2, L3 Quotations quickly with automated formatting.</p>
         </div>
     """, unsafe_allow_html=True)
-    if st.button("Open Quotation Generator", key="q_gen", use_container_width=True):
-        # Open tool action/link
-        pass
+    # Direct link button for Quotation Generator
+    st.link_button("Open Quotation Generator 🚀", "https://koshi-quotation-6g7gym9uow5juafcpvrccs.streamlit.app/", use_container_width=True)
 
 with col_b:
     st.markdown("""
@@ -69,9 +68,8 @@ with col_b:
             <p>Create official Koshi Enterprises letterheads in standard layout.</p>
         </div>
     """, unsafe_allow_html=True)
-    if st.button("Open Letterhead Generator", key="l_gen", use_container_width=True):
-        # Open tool action/link
-        pass
+    # Put your letterhead URL here if different
+    st.link_button("Open Letterhead Generator 🚀", "https://koshi-quotation-6g7gym9uow5juafcpvrccs.streamlit.app/", use_container_width=True)
 
 # Footer
 st.markdown("---")
