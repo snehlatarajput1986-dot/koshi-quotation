@@ -58,8 +58,8 @@ with col_a:
             <p>Generate L1, L2, L3 Quotations quickly with automated formatting.</p>
         </div>
     """, unsafe_allow_html=True)
-    # Direct link button for Quotation Generator
-    st.link_button("Open Quotation Generator 🚀", "https://koshi-quotation-6g7gym9uow5juafcpvrccs.streamlit.app/", use_container_width=True)
+    # Quotation Generator Link
+    st.link_button("Open Quotation Generator 🚀", "https://koshi-quotation-opgwbqipckeu9vji2vewe6.streamlit.app/", use_container_width=True)
 
 with col_b:
     st.markdown("""
@@ -68,8 +68,8 @@ with col_b:
             <p>Create official Koshi Enterprises letterheads in standard layout.</p>
         </div>
     """, unsafe_allow_html=True)
-    # Put your letterhead URL here if different
-    st.link_button("Open Letterhead Generator 🚀", "https://koshi-quotation-6g7gym9uow5juafcpvrccs.streamlit.app/", use_container_width=True)
+    # Letterhead Generator Link
+    st.link_button("Open Letterhead Generator 🚀", "https://koshi-letterhead-hg9ddeynmdfufmtvascpah.streamlit.app/", use_container_width=True)
 
 # Footer
 st.markdown("---")
