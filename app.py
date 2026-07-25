@@ -4,13 +4,6 @@ import pandas as pd
 
 st.set_page_config(page_title="Custom Multi-Format Quotation Generator", page_icon="📄", layout="wide")
 
-# --- SESSION STATE FOR HELP POPUP ---
-if "show_help" not in st.session_state:
-    st.session_state.show_help = False
-
-def toggle_help():
-    st.session_state.show_help = not st.session_state.show_help
-
 st.title("📄 Multi-Format Comparative Quotation Generator")
 
 st.sidebar.header("⚙️ Select Firm & Layout")
@@ -20,6 +13,13 @@ comp_selection = st.sidebar.radio(
      "2. R.T. ENTERPRISES (L2)", 
      "3. NEW MANORMA ENTERPRISES (L3)"]
 )
+
+# --- SIDEBAR HELP / SUPPORT SECTION ---
+st.sidebar.markdown("---")
+st.sidebar.subheader("🎧 Help & Support")
+st.sidebar.markdown("Koi dikkat ho ya baat karni ho toh seedha WhatsApp par message karein:")
+whatsapp_url = "https://wa.me/918864097233?text=Hello,%20mujhe%20is%20quotation%20generator%20ke%20bare%20me%20baat%20karni%20hai"
+st.sidebar.markdown(f'<a href="{whatsapp_url}" target="_blank"><button style="width:100%; background-color:#25D366; color:white; padding:10px; border:none; border-radius:5px; font-weight:bold; cursor:pointer;">💬 WhatsApp Help</button></a>', unsafe_allow_html=True)
 
 col1, col2 = st.columns([1, 1])
 
@@ -240,34 +240,3 @@ with col2:
         use_container_width=True
     )
     components.html(quotation_html, height=750, scrolling=True)
-
-# --- NATIVE STREAMLIT FLOATING HELP BUTTON & MODAL ---
-st.markdown("""
-<style>
-.floating-help-btn {
-    position: fixed;
-    bottom: 30px;
-    right: 30px;
-    z-index: 99999;
-}
-</style>
-""", unsafe_allow_html=True)
-
-# Floating button container bottom-right
-with st.container():
-    st.markdown('<div class="floating-help-btn">', unsafe_allow_html=True)
-    if st.button("🎧 Help", key="help_trigger_btn"):
-        toggle_help()
-    st.markdown('</div>', unsafe_allow_html=True)
-
-# Show Pop-up Dialog/Container if toggled True
-if st.session_state.show_help:
-    with st.expander("💬 Help Center & Support", expanded=True):
-        st.markdown("### How can we help? 👋")
-        st.markdown("Send us a message on WhatsApp. We typically reply in a few minutes.")
-        st.markdown("---")
-        whatsapp_url = "https://wa.me/918864097233?text=Hello,%20mujhe%20is%20quotation%20generator%20ke%20bare%20me%20baat%20karni%20hai"
-        st.markdown(f'<a href="{whatsapp_url}" target="_blank"><button style="background-color:#25D366; color:white; padding:10px 20px; border:none; border-radius:5px; font-weight:bold; cursor:pointer;">💬 WhatsApp par Message Karein</button></a>', unsafe_allow_html=True)
-        if st.button("❌ Close Help Box"):
-            toggle_help()
-            st.rerun()
