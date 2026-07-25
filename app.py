@@ -233,7 +233,8 @@ with col2:
         use_container_width=True
     )
     components.html(quotation_html, height=750, scrolling=True)
-# --- Help Pop-up Feature ---
+
+# --- Help Pop-up Feature with Updated WhatsApp Number ---
 st.markdown("""
 <style>
 .help-btn {
@@ -293,9 +294,11 @@ st.markdown("""
         <h2>How can we help? 👋</h2>
         <p style="color: #aaa;">Send us a message. We typically reply in a few minutes.</p>
         <hr style="border-color: #333;">
-        <div style="background: #1e1e1e; padding: 15px; border-radius: 8px; cursor: pointer; margin-top: 15px;">
-            💬 <b>Send us a message</b> <span style="float: right;">&gt;</span>
-        </div>
+        <a href="https://wa.me/918864097233?text=Hello,%20mujhe%20is%20quotation%20generator%20ke%20bare%20me%20baat%20karni%20hai" target="_blank" style="text-decoration: none;">
+            <div style="background: #25D366; padding: 15px; border-radius: 8px; cursor: pointer; margin-top: 15px; color: white;">
+                💬 <b>WhatsApp par Message Karein</b> <span style="float: right;">&gt;</span>
+            </div>
+        </a>
     </div>
 </div>
 
