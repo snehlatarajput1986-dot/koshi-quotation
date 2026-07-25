@@ -4,6 +4,13 @@ import pandas as pd
 
 st.set_page_config(page_title="Custom Multi-Format Quotation Generator", page_icon="📄", layout="wide")
 
+# --- SESSION STATE FOR HELP POPUP ---
+if "show_help" not in st.session_state:
+    st.session_state.show_help = False
+
+def toggle_help():
+    st.session_state.show_help = not st.session_state.show_help
+
 st.title("📄 Multi-Format Comparative Quotation Generator")
 
 st.sidebar.header("⚙️ Select Firm & Layout")
@@ -234,80 +241,33 @@ with col2:
     )
     components.html(quotation_html, height=750, scrolling=True)
 
-# --- Help Pop-up Feature with Updated WhatsApp Number ---
+# --- NATIVE STREAMLIT FLOATING HELP BUTTON & MODAL ---
 st.markdown("""
 <style>
-.help-btn {
+.floating-help-btn {
     position: fixed;
-    bottom: 80px;
-    right: 20px;
-    background-color: #00E676;
-    color: white;
-    border-radius: 50%;
-    width: 60px;
-    height: 60px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-    cursor: pointer;
-    z-index: 9999;
-    font-size: 28px;
-}
-.modal-overlay {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.7);
-    z-index: 10000;
-    justify-content: center;
-    align-items: center;
-}
-.modal-content {
-    background-color: #121212;
-    width: 90%;
-    max-width: 450px;
-    border-radius: 15px;
-    padding: 20px;
-    color: white;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.5);
-    position: relative;
-}
-.close-btn {
-    position: absolute;
-    top: 15px;
-    right: 20px;
-    font-size: 24px;
-    cursor: pointer;
-    color: #aaa;
+    bottom: 30px;
+    right: 30px;
+    z-index: 99999;
 }
 </style>
-
-<div class="help-btn" onclick="openModal()">🎧</div>
-
-<div id="helpModal" class="modal-overlay">
-    <div class="modal-content">
-        <span class="close-btn" onclick="closeModal()">&times;</span>
-        <h2>How can we help? 👋</h2>
-        <p style="color: #aaa;">Send us a message. We typically reply in a few minutes.</p>
-        <hr style="border-color: #333;">
-        <a href="https://wa.me/918864097233?text=Hello,%20mujhe%20is%20quotation%20generator%20ke%20bare%20me%20baat%20karni%20hai" target="_blank" style="text-decoration: none;">
-            <div style="background: #25D366; padding: 15px; border-radius: 8px; cursor: pointer; margin-top: 15px; color: white;">
-                💬 <b>WhatsApp par Message Karein</b> <span style="float: right;">&gt;</span>
-            </div>
-        </a>
-    </div>
-</div>
-
-<script>
-function openModal() {
-    document.getElementById("helpModal").style.display = "flex";
-}
-function closeModal() {
-    document.getElementById("helpModal").style.display = "none";
-}
-</script>
 """, unsafe_allow_html=True)
+
+# Floating button container bottom-right
+with st.container():
+    st.markdown('<div class="floating-help-btn">', unsafe_allow_html=True)
+    if st.button("🎧 Help", key="help_trigger_btn"):
+        toggle_help()
+    st.markdown('</div>', unsafe_allow_html=True)
+
+# Show Pop-up Dialog/Container if toggled True
+if st.session_state.show_help:
+    with st.expander("💬 Help Center & Support", expanded=True):
+        st.markdown("### How can we help? 👋")
+        st.markdown("Send us a message on WhatsApp. We typically reply in a few minutes.")
+        st.markdown("---")
+        whatsapp_url = "https://wa.me/918864097233?text=Hello,%20mujhe%20is%20quotation%20generator%20ke%20bare%20me%20baat%20karni%20hai"
+        st.markdown(f'<a href="{whatsapp_url}" target="_blank"><button style="background-color:#25D366; color:white; padding:10px 20px; border:none; border-radius:5px; font-weight:bold; cursor:pointer;">💬 WhatsApp par Message Karein</button></a>', unsafe_allow_html=True)
+        if st.button("❌ Close Help Box"):
+            toggle_help()
+            st.rerun()
