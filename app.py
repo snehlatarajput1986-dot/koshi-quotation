@@ -256,3 +256,14 @@ st.markdown("""
     }
 </style>
 """, unsafe_allow_html=True)
+<style>
+    body {
+        background-color: #0d061a !important;
+        color: #ffffff !important;
+    }
+    .q-container, .rt-box, .m-box {
+        background-color: #1a0b2e !important;
+        color: #ffffff !important;
+        border: 1px solid rgba(168, 85, 247, 0.4) !important;
+    }
+</style>
