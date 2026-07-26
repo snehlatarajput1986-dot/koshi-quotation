@@ -4,7 +4,7 @@ import pandas as pd
 
 st.set_page_config(page_title="Custom Multi-Format Quotation Generator", page_icon="📄", layout="wide")
 
-# --- DARK PURPLE THEME & STABILITY CSS ---
+# --- CLEAN & PROFESSIONAL HYBRID THEME CSS ---
 st.markdown("""
 <style>
     /* Main Background & Font */
@@ -19,13 +19,20 @@ st.markdown("""
         border-right: 1px solid rgba(168, 85, 247, 0.2);
     }
     
-    /* Input Fields Styling */
+    /* Input Fields Styling - High Visibility */
     input, textarea, select {
-        background-color: #1e1136 !important;
+        background-color: #160a24 !important;
         color: #ffffff !important;
-        border: 1px solid rgba(168, 85, 247, 0.4) !important;
+        border: 1.5px solid #a855f7 !important;
         border-radius: 8px !important;
+        font-size: 14px !important;
         max-width: 100% !important;
+    }
+    
+    /* Input Labels Readability */
+    .stTextInput label, .stTextArea label, .stRadio label {
+        color: #f3e8ff !important;
+        font-weight: 600 !important;
     }
     
     /* Buttons Styling */
@@ -43,7 +50,7 @@ st.markdown("""
         color: #f3e8ff !important;
     }
 
-    /* Page Scrolling & Stability (Garba/Shaking Fix) */
+    /* Page Scrolling & Stability */
     html, body, [data-testid="stAppViewContainer"] {
         overflow-x: hidden !important;
         scroll-behavior: smooth;
@@ -109,7 +116,7 @@ with col1:
     st.subheader("📝 Words & Remarks")
     amt_words = st.text_input("Amount in Words", value="Enter amount in words...")
 
-# --- GENERATE SPECIFIC HTML LAYOUTS WITH DARK THEME SUPPORT ---
+# --- GENERATE SPECIFIC HTML LAYOUTS WITH WHITE & SKY BLUE THEME ---
 items_list = []
 grand_total = 0.0
 
@@ -132,34 +139,33 @@ for idx, row in edited_df.iterrows():
 if "1. KOSHI ENTERPRISES" in comp_selection:
     rows_html = "".join([f"""
     <tr>
-        <td style="text-align:center;">{i['sn']}</td>
-        <td>{i['desc']}</td>
-        <td style="text-align:center;">{i['qty']} PCS</td>
-        <td style="text-align:right;">₹{i['rate']:,.2f}</td>
-        <td style="text-align:right;">₹{i['amount']:,.2f}</td>
+        <td style="text-align:center; padding:10px; border-bottom:1px solid #e2e8f0;">{i['sn']}</td>
+        <td style="padding:10px; border-bottom:1px solid #e2e8f0; color:#1e293b;">{i['desc']}</td>
+        <td style="text-align:center; padding:10px; border-bottom:1px solid #e2e8f0; color:#1e293b;">{i['qty']} PCS</td>
+        <td style="text-align:right; padding:10px; border-bottom:1px solid #e2e8f0; color:#1e293b;">₹{i['rate']:,.2f}</td>
+        <td style="text-align:right; padding:10px; border-bottom:1px solid #e2e8f0; color:#1e293b; font-weight:bold;">₹{i['amount']:,.2f}</td>
     </tr>""" for i in items_list])
 
     quotation_html = f"""
     <!DOCTYPE html><html><head><style>
     * {{ -webkit-print-color-adjust: exact !important; box-sizing: border-box; }}
-    body {{ font-family: Arial, sans-serif; margin: 0; padding: 10px; background-color: #0d061a !important; color: #ffffff !important; }}
-    .q-container {{ max-width: 800px; margin: 0 auto; border: 2px solid #a855f7; padding: 20px; background-color: #1a0b2e !important; border-radius: 8px; }}
-    .header {{ background: linear-gradient(135deg, #002b80, #0052cc); color: white; padding: 15px; text-align: center; border-radius: 5px; }}
-    .item-table {{ width: 100%; border-collapse: collapse; margin-top: 15px; color: #fff; }}
-    .item-table th {{ background-color: #002b80; color: white; padding: 8px; text-align: left; font-size: 13px; }}
-    .item-table td {{ border: 1px solid #443366; padding: 8px; font-size: 13px; }}
-    .total-box {{ background-color: #2b184a; border: 1px solid #a855f7; padding: 10px; text-align: right; font-size: 16px; font-weight: bold; color: #f3e8ff; margin-top: 15px; }}
+    body {{ font-family: Arial, sans-serif; margin: 0; padding: 10px; background-color: #0d061a !important; }}
+    .q-container {{ max-width: 800px; margin: 0 auto; border: 2px solid #0052cc; padding: 25px; background-color: #ffffff !important; color: #111827 !important; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); }}
+    .header {{ background: linear-gradient(135deg, #002b80, #0052cc); color: white; padding: 20px; text-align: center; border-radius: 6px; }}
+    .item-table {{ width: 100%; border-collapse: collapse; margin-top: 20px; }}
+    .item-table th {{ background-color: #e0f2fe; color: #0369a1; padding: 10px; text-align: left; font-size: 13px; border-bottom: 2px solid #bae6fd; }}
+    .total-box {{ background-color: #f0fdf4; border: 1px solid #bbf7d0; color: #166534; padding: 12px; text-align: right; font-size: 16px; font-weight: bold; margin-top: 20px; border-radius: 6px; }}
     </style></head><body>
     <div class="q-container">
         <div class="header">
-            <h1 style="margin:0;">KOSHI ENTERPRISES</h1>
-            <p style="margin:3px 0; font-size:12px;">Sukhasan Uttarwari, Ward No. 07, Madhepura, Bihar - 852113</p>
-            <p style="margin:0; font-size:12px;">GSTIN: 10CJAPK9167R1ZQ | Mobile: +91 8541887622</p>
-            <span style="background:#ff9900; color:#000; padding:2px 10px; font-weight:bold; font-size:13px; margin-top:5px; display:inline-block;">QUOTATION</span>
+            <h1 style="margin:0; font-size:28px; letter-spacing:1px;">KOSHI ENTERPRISES</h1>
+            <p style="margin:4px 0; font-size:12px; opacity:0.9;">Sukhasan Uttarwari, Ward No. 07, Madhepura, Bihar - 852113</p>
+            <p style="margin:0; font-size:12px; opacity:0.9;">GSTIN: 10CJAPK9167R1ZQ | Mobile: +91 8541887622</p>
+            <span style="background:#ff9900; color:#000; padding:3px 12px; font-weight:bold; font-size:12px; margin-top:8px; display:inline-block; border-radius:4px;">QUOTATION</span>
         </div>
-        <table style="width:100%; font-size:13px; margin: 15px 0;">
+        <table style="width:100%; font-size:13px; margin: 20px 0; color: #334155;">
             <tr>
-                <td><b>BILLED TO:</b><br>{billed_to.replace('\n', '<br>')}</td>
+                <td><b>BILLED TO:</b><br><div style="margin-top:4px; line-height:1.5;">{billed_to.replace('\n', '<br>')}</div></td>
                 <td style="text-align:right; vertical-align:top;"><b>Ref No:</b> {ref_no}<br><b>Date:</b> {q_date}</td>
             </tr>
         </table>
@@ -168,10 +174,10 @@ if "1. KOSHI ENTERPRISES" in comp_selection:
             <tbody>{rows_html}</tbody>
         </table>
         <div class="total-box">GRAND TOTAL: ₹{grand_total:,.2f}</div>
-        <p style="font-size:12px; margin-top:10px;"><b>AMOUNT IN WORDS:</b> {amt_words}</p>
-        <div style="margin-top:30px; display:flex; justify-content:space-between; font-size:11px;">
+        <p style="font-size:13px; margin-top:15px; color:#334155;"><b>AMOUNT IN WORDS:</b> {amt_words}</p>
+        <div style="margin-top:35px; display:flex; justify-content:space-between; font-size:12px; color:#475569;">
             <div><b>TERMS & CONDITIONS:</b><br>• Freight charges & taxes included.<br>• Standard warranty applicable.</div>
-            <div style="text-align:center; font-size:12px;"><p style="margin-bottom:40px;">For <b>KOSHI ENTERPRISES</b></p><p>Authorized Signatory</p></div>
+            <div style="text-align:center;"><p style="margin-bottom:45px;">For <b>KOSHI ENTERPRISES</b></p><p>Authorized Signatory</p></div>
         </div>
     </div></body></html>"""
 
@@ -179,51 +185,51 @@ if "1. KOSHI ENTERPRISES" in comp_selection:
 elif "2. R.T. ENTERPRISES" in comp_selection:
     rows_html = "".join([f"""
     <tr>
-        <td style="text-align:center;">0{i['sn']}</td>
-        <td>{i['desc']}</td>
-        <td style="text-align:center;">{i['qty']}</td>
-        <td style="text-align:center;">PCS</td>
-        <td style="text-align:right;">{i['rate']:,.2f}</td>
-        <td style="text-align:right;">{i['amount']:,.2f}</td>
+        <td style="text-align:center; padding:8px; border-bottom:1px solid #cbd5e1;">0{i['sn']}</td>
+        <td style="padding:8px; border-bottom:1px solid #cbd5e1; color:#1e293b;">{i['desc']}</td>
+        <td style="text-align:center; padding:8px; border-bottom:1px solid #cbd5e1; color:#1e293b;">{i['qty']}</td>
+        <td style="text-align:center; padding:8px; border-bottom:1px solid #cbd5e1; color:#1e293b;">PCS</td>
+        <td style="text-align:right; padding:8px; border-bottom:1px solid #cbd5e1; color:#1e293b;">{i['rate']:,.2f}</td>
+        <td style="text-align:right; padding:8px; border-bottom:1px solid #cbd5e1; color:#1e293b; font-weight:bold;">{i['amount']:,.2f}</td>
     </tr>""" for i in items_list])
 
     quotation_html = f"""
     <!DOCTYPE html><html><head><style>
     * {{ -webkit-print-color-adjust: exact !important; box-sizing: border-box; }}
-    body {{ font-family: Arial, sans-serif; margin: 0; padding: 10px; background-color: #0d061a !important; color: #ffffff !important; }}
-    .rt-box {{ max-width: 800px; margin: 0 auto; border: 1.5px solid #a855f7; padding: 20px; background-color: #1a0b2e !important; border-radius: 8px; }}
-    .title-head {{ border-bottom: 2px solid #a855f7; padding-bottom: 10px; margin-bottom: 15px; display:flex; justify-content:space-between; align-items:center; }}
-    .rt-table {{ width: 100%; border-collapse: collapse; margin-top: 10px; color: #fff; }}
-    .rt-table th, .rt-table td {{ border: 1px solid #443366; padding: 6px 8px; font-size: 12px; }}
+    body {{ font-family: Arial, sans-serif; margin: 0; padding: 10px; background-color: #0d061a !important; }}
+    .rt-box {{ max-width: 800px; margin: 0 auto; border: 1.5px solid #0284c7; padding: 25px; background-color: #ffffff !important; color: #111827 !important; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); }}
+    .title-head {{ border-bottom: 2px solid #0284c7; padding-bottom: 12px; margin-bottom: 15px; display:flex; justify-content:space-between; align-items:center; }}
+    .rt-table {{ width: 100%; border-collapse: collapse; margin-top: 10px; }}
+    .rt-table th, .rt-table td {{ border: 1px solid #cbd5e1; padding: 8px; font-size: 12px; }}
     </style></head><body>
     <div class="rt-box">
         <div class="title-head">
             <div>
-                <h2 style="margin:0; font-size:22px; letter-spacing:1px; color:#f3e8ff;">R.T. ENTERPRISES</h2>
-                <p style="margin:2px 0; font-size:11px; color:#d8b4fe;">NEW COLONY, SAHARSA, BIHAR - 852201</p>
-                <p style="margin:0; font-size:11px; color:#d8b4fe;">GSTIN: 10CIRPT5717JIZU | Mobile: +91 9113164314</p>
+                <h2 style="margin:0; font-size:22px; color:#0369a1;">R.T. ENTERPRISES</h2>
+                <p style="margin:2px 0; font-size:11px; color:#475569;">NEW COLONY, SAHARSA, BIHAR - 852201</p>
+                <p style="margin:0; font-size:11px; color:#475569;">GSTIN: 10CIRPT5717JIZU | Mobile: +91 9113164314</p>
             </div>
-            <div style="border:1px solid #a855f7; padding:5px 15px; font-weight:bold; font-size:16px; color:#f3e8ff;">QUOTATION</div>
+            <div style="background:#e0f2fe; border:1px solid #7dd3fc; padding:6px 15px; font-weight:bold; font-size:15px; color:#0369a1; border-radius:4px;">QUOTATION</div>
         </div>
-        <table style="width:100%; font-size:12px; margin-bottom:15px; border-bottom:1px solid #443366; padding-bottom:10px;">
+        <table style="width:100%; font-size:12px; margin-bottom:15px; border-bottom:1px solid #cbd5e1; padding-bottom:10px; color:#334155;">
             <tr>
-                <td style="width:50%;"><b>QUOTATION ISSUED TO:</b><br>{billed_to.replace('\n', '<br>')}</td>
-                <td style="width:50%; vertical-align:top;"><b>SUPPLIER DETAILS:</b><br>R.T. ENTERPRISES<br>New Colony, Saharsa, Bihar 852201<br>Ref No: {ref_no} | Date: {q_date}</td>
+                <td style="width:50%;"><b>QUOTATION ISSUED TO:</b><br><div style="margin-top:4px;">{billed_to.replace('\n', '<br>')}</div></td>
+                <td style="width:50%; vertical-align:top;"><b>SUPPLIER DETAILS:</b><br>R.T. ENTERPRISES<br>Ref No: {ref_no} | Date: {q_date}</td>
             </tr>
         </table>
         <table class="rt-table">
-            <thead><tr style="background:#2b184a;"><th>S.N.</th><th>DESCRIPTION OF GOODS</th><th>QTY</th><th>PER</th><th>RATE (₹)</th><th>AMOUNT (₹)</th></tr></thead>
+            <thead><tr style="background:#e0f2fe; color:#0369a1;"><th>S.N.</th><th>DESCRIPTION OF GOODS</th><th>QTY</th><th>PER</th><th>RATE (₹)</th><th>AMOUNT (₹)</th></tr></thead>
             <tbody>
                 {rows_html}
-                <tr><td colspan="5" style="text-align:right;"><b>Subtotal</b></td><td style="text-align:right;">{grand_total:,.2f}</td></tr>
-                <tr><td colspan="5" style="text-align:right;"><b>Taxes & Freight</b></td><td style="text-align:right;">INCLUDED</td></tr>
-                <tr><td colspan="5" style="text-align:right;"><b>TOTAL AMOUNT</b></td><td style="text-align:right;"><b>₹{grand_total:,.2f}</b></td></tr>
+                <tr><td colspan="5" style="text-align:right; font-weight:bold;">Subtotal</td><td style="text-align:right;">{grand_total:,.2f}</td></tr>
+                <tr><td colspan="5" style="text-align:right; font-weight:bold;">Taxes & Freight</td><td style="text-align:right;">INCLUDED</td></tr>
+                <tr style="background:#f8fafc;"><td colspan="5" style="text-align:right; font-weight:bold; color:#0369a1;">TOTAL AMOUNT</td><td style="text-align:right; font-weight:bold; color:#0369a1;">₹{grand_total:,.2f}</td></tr>
             </tbody>
         </table>
-        <p style="font-size:12px; margin-top:10px;"><b>Amount in Words:</b> {amt_words}</p>
-        <div style="margin-top:25px; display:flex; justify-content:space-between; font-size:11px;">
-            <div><b>Terms & Conditions:</b><br>• All Freight and Taxes Included in the above rate.<br>• Goods covered under standard warranty.<br>• Payment terms as per government protocol.</div>
-            <div style="text-align:center; font-size:12px;"><p style="margin-bottom:40px;">For <b>R.T. ENTERPRISES</b></p><p>Authorized Signatory/Stamp</p></div>
+        <p style="font-size:12px; margin-top:12px; color:#334155;"><b>Amount in Words:</b> {amt_words}</p>
+        <div style="margin-top:25px; display:flex; justify-content:space-between; font-size:11px; color:#475569;">
+            <div><b>Terms & Conditions:</b><br>• All Freight and Taxes Included.<br>• Standard warranty applicable.</div>
+            <div style="text-align:center;"><p style="margin-bottom:40px;">For <b>R.T. ENTERPRISES</b></p><p>Authorized Signatory</p></div>
         </div>
     </div></body></html>"""
 
@@ -231,48 +237,47 @@ elif "2. R.T. ENTERPRISES" in comp_selection:
 else:
     rows_html = "".join([f"""
     <tr>
-        <td style="text-align:center;">{i['sn']}</td>
-        <td>{i['desc']}</td>
-        <td style="text-align:center;">{i['qty']}</td>
-        <td style="text-align:center;">PCS</td>
-        <td style="text-align:right;">{i['rate']:,.2f}</td>
-        <td style="text-align:right;">{i['amount']:,.2f}</td>
+        <td style="text-align:center; padding:8px; border-bottom:1px solid #cbd5e1;">{i['sn']}</td>
+        <td style="padding:8px; border-bottom:1px solid #cbd5e1; color:#1e293b;">{i['desc']}</td>
+        <td style="text-align:center; padding:8px; border-bottom:1px solid #cbd5e1; color:#1e293b;">{i['qty']}</td>
+        <td style="text-align:center; padding:8px; border-bottom:1px solid #cbd5e1; color:#1e293b;">PCS</td>
+        <td style="text-align:right; padding:8px; border-bottom:1px solid #cbd5e1; color:#1e293b;">{i['rate']:,.2f}</td>
+        <td style="text-align:right; padding:8px; border-bottom:1px solid #cbd5e1; color:#1e293b; font-weight:bold;">{i['amount']:,.2f}</td>
     </tr>""" for i in items_list])
 
     quotation_html = f"""
     <!DOCTYPE html><html><head><style>
     * {{ -webkit-print-color-adjust: exact !important; box-sizing: border-box; }}
-    body {{ font-family: Arial, sans-serif; margin: 0; padding: 10px; background-color: #0d061a !important; color: #ffffff !important; }}
-    .m-box {{ max-width: 800px; margin: 0 auto; border: 1px solid #a855f7; padding: 20px; background-color: #1a0b2e !important; border-radius: 8px; }}
-    .m-head {{ text-align: center; color: #ff6666; border-bottom:2px solid #a855f7; padding-bottom:8px; }}
-    .m-table {{ width: 100%; border-collapse: collapse; margin-top: 15px; color: #fff; }}
-    .m-table th, .m-table td {{ border: 1px solid #443366; padding: 6px; font-size: 12px; }}
+    body {{ font-family: Arial, sans-serif; margin: 0; padding: 10px; background-color: #0d061a !important; }}
+    .m-box {{ max-width: 800px; margin: 0 auto; border: 1px solid #0284c7; padding: 25px; background-color: #ffffff !important; color: #111827 !important; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); }}
+    .m-head {{ text-align: center; border-bottom:2px solid #0284c7; padding-bottom:10px; }}
+    .m-table {{ width: 100%; border-collapse: collapse; margin-top: 15px; }}
+    .m-table th, .m-table td {{ border: 1px solid #cbd5e1; padding: 8px; font-size: 12px; }}
     </style></head><body>
     <div class="m-box">
         <div class="m-head">
-            <h2 style="margin:0; font-size:22px; color:#ff8080;">NEW MANORMA ENTERPRISES</h2>
-            <p style="margin:2px 0; font-size:11px; color:#d8b4fe;">RAJENDRA NAGAR, WARD NO. 02, SUPAUL</p>
-            <p style="margin:0; font-size:11px; color:#d8b4fe;">GSTIN: 10AZGPM9227L1Z7 | Mobile: +91 7362821383</p>
+            <h2 style="margin:0; font-size:22px; color:#0284c7;">NEW MANORMA ENTERPRISES</h2>
+            <p style="margin:2px 0; font-size:11px; color:#475569;">RAJENDRA NAGAR, WARD NO. 02, SUPAUL</p>
+            <p style="margin:0; font-size:11px; color:#475569;">GSTIN: 10AZGPM9227L1Z7 | Mobile: +91 7362821383</p>
         </div>
-        <table style="width:100%; font-size:12px; margin: 15px 0;">
+        <table style="width:100%; font-size:12px; margin: 15px 0; color:#334155;">
             <tr>
-                <td style="width:60%;"><b>QUOTATION TO:</b><br>{billed_to.replace('\n', '<br>')}</td>
+                <td style="width:60%;"><b>QUOTATION TO:</b><br><div style="margin-top:4px;">{billed_to.replace('\n', '<br>')}</div></td>
                 <td style="text-align:right; vertical-align:top;"><b>REFERENCE & DATE</b><br>Ref No: {ref_no}<br>Date: {q_date}</td>
             </tr>
         </table>
         <table class="m-table">
-            <thead><tr style="background:#2b184a;"><th>S.N.</th><th>DESCRIPTION OF GOODS</th><th>QTY</th><th>PER</th><th>RATE (₹)</th><th>AMOUNT (₹)</th></tr></thead>
+            <thead><tr style="background:#e0f2fe; color:#0369a1;"><th>S.N.</th><th>DESCRIPTION OF GOODS</th><th>QTY</th><th>PER</th><th>RATE (₹)</th><th>AMOUNT (₹)</th></tr></thead>
             <tbody>
                 {rows_html}
-                <tr><td colspan="5" style="text-align:right;"><b>Sub Total:</b></td><td style="text-align:right;">{grand_total:,.2f}</td></tr>
-                <tr><td colspan="5" style="text-align:right;"><b>Taxes & Freight:</b></td><td style="text-align:right;">Included</td></tr>
-                <tr><td colspan="5" style="text-align:right;"><b>Total Amount:</b></td><td style="text-align:right;"><b>₹{grand_total:,.2f}</b></td></tr>
+                <tr><td colspan="5" style="text-align:right; font-weight:bold;">Sub Total:</td><td style="text-align:right;">{grand_total:,.2f}</td></tr>
+                <tr><td colspan="5" style="text-align:right; font-weight:bold;">Taxes & Freight:</td><td style="text-align:right;">Included</td></tr>
+                <tr style="background:#f8fafc;"><td colspan="5" style="text-align:right; font-weight:bold; color:#0284c7;">Total Amount:</td><td style="text-align:right; font-weight:bold; color:#0284c7;">₹{grand_total:,.2f}</td></tr>
             </tbody>
         </table>
-        <p style="font-size:12px; margin-top:10px;"><b>Amount in Words:</b> {amt_words}</p>
-        <p style="font-size:11px; color:#d8b4fe;"><b>Terms & Conditions:</b><br>• ALL FREIGHT AND TAXES INCLUDED.<br>• Payment as per agreed terms.<br>• Goods once sold will not be taken back without prior approval.</p>
-        <p style="text-align:center; font-style:italic; font-size:12px; margin-top:15px;">Thank you for your business!</p>
-        <div style="text-align:right; margin-top:20px; font-size:12px;"><p style="margin-bottom:40px;">For <b>NEW MANORMA ENTERPRISES</b></p><p>Authorized Signatory</p></div>
+        <p style="font-size:12px; margin-top:12px; color:#334155;"><b>Amount in Words:</b> {amt_words}</p>
+        <p style="font-size:11px; color:#475569; line-height:1.4;"><b>Terms & Conditions:</b><br>• ALL FREIGHT AND TAXES INCLUDED.<br>• Payment as per agreed terms.</p>
+        <div style="text-align:right; margin-top:25px; font-size:12px; color:#334155;"><p style="margin-bottom:40px;">For <b>NEW MANORMA ENTERPRISES</b></p><p>Authorized Signatory</p></div>
     </div></body></html>"""
 
 with col2:
