@@ -7,198 +7,190 @@ st.set_page_config(
     layout="wide"
 )
 
-# Custom Styling & Print Logic
+# Global Custom CSS
 st.markdown("""
-    <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
-    
-    .stApp {
-        background-color: #f1f5f9;
-    }
-    .main-title {
-        color: #0f172a;
-        font-weight: 700;
-        margin-bottom: 10px;
-    }
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
-    /* Outer Wrapper for Print Context */
+.stApp {
+    background-color: #f1f5f9;
+}
+.main-title {
+    color: #0f172a;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+#printableArea {
+    background-color: #ffffff;
+    width: 100%;
+    max-width: 800px;
+    padding: 20px 24px;
+    margin: auto;
+    box-sizing: border-box;
+    font-family: 'Inter', -apple-system, sans-serif;
+    color: #1e293b;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    border-radius: 6px;
+}
+
+.resume-header {
+    background-color: #1e293b !important;
+    color: #ffffff !important;
+    border-radius: 6px;
+    padding: 16px 20px;
+    margin-bottom: 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+}
+.header-info h1 {
+    margin: 0;
+    font-size: 22px;
+    font-weight: 700;
+    color: #ffffff !important;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+.header-info .sub-title {
+    color: #38bdf8 !important;
+    font-size: 13px;
+    font-weight: 600;
+    margin-top: 2px;
+    margin-bottom: 8px;
+}
+.header-contact {
+    font-size: 11px;
+    color: #e2e8f0 !important;
+    line-height: 1.5;
+}
+
+.photo-box {
+    width: 90px;
+    height: 110px;
+    border-radius: 4px;
+    border: 2px solid #38bdf8;
+    overflow: hidden;
+    background-color: #0f172a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+.photo-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.section-title {
+    font-size: 11.5px;
+    font-weight: 700;
+    color: #0f172a;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-bottom: 2px solid #0284c7;
+    padding-bottom: 2px;
+    margin-bottom: 8px;
+    margin-top: 10px;
+}
+
+.info-card {
+    background-color: #f8fafc !important;
+    border-radius: 4px;
+    padding: 7px 10px;
+    margin-bottom: 7px;
+    border-left: 3px solid #0284c7 !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+}
+.info-card-title {
+    font-size: 11.5px;
+    font-weight: 700;
+    color: #0f172a;
+}
+.info-card-sub {
+    font-size: 10.5px;
+    color: #0284c7;
+    font-weight: 600;
+    margin-top: 1px;
+    margin-bottom: 2px;
+}
+.info-card-desc {
+    font-size: 10.5px;
+    color: #475569;
+    line-height: 1.35;
+}
+
+.competencies-list {
+    background-color: #f8fafc !important;
+    border-radius: 4px;
+    padding: 6px 10px 6px 22px;
+    margin: 0 0 7px 0;
+    border-left: 3px solid #0284c7 !important;
+    font-size: 10.5px;
+    color: #334155;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+}
+.competencies-list li {
+    margin-bottom: 3px;
+}
+
+.personal-table {
+    width: 100%;
+    font-size: 10.5px;
+    color: #334155;
+    border-collapse: collapse;
+    background-color: #f8fafc !important;
+    border-radius: 4px;
+    padding: 6px 8px;
+    border-left: 3px solid #0284c7 !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+}
+.personal-table td {
+    padding: 2px 4px;
+}
+
+.declaration-box {
+    background-color: #f8fafc !important;
+    border-radius: 4px;
+    padding: 8px 10px;
+    margin-top: 10px;
+    border: 1px solid #e2e8f0;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+}
+
+@media print {
+    @page {
+        size: A4 portrait;
+        margin: 8mm !important;
+    }
+    body * {
+        visibility: hidden;
+    }
+    #printableArea, #printableArea * {
+        visibility: visible;
+    }
     #printableArea {
-        background-color: #ffffff;
-        width: 210mm;
-        min-height: 297mm;
-        padding: 12mm 15mm;
-        margin: auto;
-        box-sizing: border-box;
-        font-family: 'Inter', sans-serif;
-        color: #1e293b;
-        box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-        border-radius: 4px;
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100% !important;
+        max-width: 100% !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        box-shadow: none !important;
     }
-
-    /* Header Banner */
-    .resume-header {
-        background-color: #1e293b !important;
-        color: #ffffff !important;
-        border-radius: 6px;
-        padding: 16px 20px;
-        margin-bottom: 14px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        -webkit-print-color-adjust: exact !important;
-        print-color-adjust: exact !important;
+    [data-testid="stSidebar"], .stButton, header, footer, iframe {
+        display: none !important;
     }
-    .header-info h1 {
-        margin: 0;
-        font-size: 22px;
-        font-weight: 700;
-        color: #ffffff !important;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-    }
-    .header-info .sub-title {
-        color: #38bdf8 !important;
-        font-size: 13px;
-        font-weight: 600;
-        margin-top: 2px;
-        margin-bottom: 8px;
-    }
-    .header-contact {
-        font-size: 11px;
-        color: #e2e8f0 !important;
-        line-height: 1.5;
-    }
-
-    /* Photo Box */
-    .photo-box {
-        width: 90px;
-        height: 110px;
-        border-radius: 4px;
-        border: 2px solid #38bdf8;
-        overflow: hidden;
-        background-color: #0f172a;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-shrink: 0;
-    }
-    .photo-box img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-    }
-
-    /* Section Header */
-    .section-title {
-        font-size: 11.5px;
-        font-weight: 700;
-        color: #0f172a;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-        border-bottom: 2px solid #0284c7;
-        padding-bottom: 2px;
-        margin-bottom: 8px;
-        margin-top: 10px;
-    }
-
-    /* Cards */
-    .info-card {
-        background-color: #f8fafc !important;
-        border-radius: 4px;
-        padding: 7px 10px;
-        margin-bottom: 7px;
-        border-left: 3px solid #0284c7 !important;
-        -webkit-print-color-adjust: exact !important;
-        print-color-adjust: exact !important;
-    }
-    .info-card-title {
-        font-size: 11.5px;
-        font-weight: 700;
-        color: #0f172a;
-    }
-    .info-card-sub {
-        font-size: 10.5px;
-        color: #0284c7;
-        font-weight: 600;
-        margin-top: 1px;
-        margin-bottom: 2px;
-    }
-    .info-card-desc {
-        font-size: 10.5px;
-        color: #475569;
-        line-height: 1.35;
-    }
-
-    /* List & Table */
-    .competencies-list {
-        background-color: #f8fafc !important;
-        border-radius: 4px;
-        padding: 6px 10px 6px 22px;
-        margin: 0 0 7px 0;
-        border-left: 3px solid #0284c7 !important;
-        font-size: 10.5px;
-        color: #334155;
-        -webkit-print-color-adjust: exact !important;
-        print-color-adjust: exact !important;
-    }
-    .competencies-list li {
-        margin-bottom: 3px;
-    }
-
-    .personal-table {
-        width: 100%;
-        font-size: 10.5px;
-        color: #334155;
-        border-collapse: collapse;
-        background-color: #f8fafc !important;
-        border-radius: 4px;
-        padding: 6px 8px;
-        border-left: 3px solid #0284c7 !important;
-        -webkit-print-color-adjust: exact !important;
-        print-color-adjust: exact !important;
-    }
-    .personal-table td {
-        padding: 2px 4px;
-    }
-
-    /* Declaration */
-    .declaration-box {
-        background-color: #f8fafc !important;
-        border-radius: 4px;
-        padding: 8px 10px;
-        margin-top: 10px;
-        border: 1px solid #e2e8f0;
-        -webkit-print-color-adjust: exact !important;
-        print-color-adjust: exact !important;
-    }
-
-    /* PERFECT PRINT OVERRIDES */
-    @media print {
-        @page {
-            size: A4 portrait;
-            margin: 0mm !important;
-        }
-        body * {
-            visibility: hidden;
-        }
-        #printableArea, #printableArea * {
-            visibility: visible;
-        }
-        #printableArea {
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: 100% !important;
-            height: 100% !important;
-            padding: 10mm 12mm !important;
-            margin: 0 !important;
-            box-shadow: none !important;
-        }
-        [data-testid="stSidebar"], .stButton, header, footer {
-            display: none !important;
-        }
-    }
-    </style>
+}
+</style>
 """, unsafe_allow_html=True)
 
 st.markdown("<h2 class='main-title'>📄 Professional Resume Builder</h2>", unsafe_allow_html=True)
@@ -264,11 +256,9 @@ st.components.v1.html("""
     </button>
 """, height=50)
 
-# Full Single A4 Printable Area
-st.markdown(f"""
+# Unindented Clean HTML Construction to prevent Markdown code block triggering
+html_content = f"""
 <div id="printableArea">
-    
-    <!-- Top Header Banner -->
     <div class="resume-header">
         <div class="header-info">
             <h1>{full_name}</h1>
@@ -283,20 +273,15 @@ st.markdown(f"""
         </div>
     </div>
 
-    <!-- 2 Column Section Layout -->
     <table style="width: 100%; border-collapse: collapse; table-layout: fixed;">
         <tr>
-            <!-- Left Column: Work Exp & Education -->
             <td style="width: 50%; vertical-align: top; padding-right: 10px; border: none;">
-                
                 <div class="section-title">WORK EXPERIENCE</div>
-                
                 <div class="info-card">
                     <div class="info-card-title">{exp1_company}</div>
                     <div class="info-card-sub">{exp1_duration}</div>
                     <div class="info-card-desc">{exp1_desc}</div>
                 </div>
-
                 <div class="info-card">
                     <div class="info-card-title">{exp2_company}</div>
                     <div class="info-card-sub">{exp2_duration}</div>
@@ -304,32 +289,25 @@ st.markdown(f"""
                 </div>
 
                 <div class="section-title">EDUCATION QUALIFICATION</div>
-
                 <div class="info-card">
                     <div class="info-card-title">Post Graduation (M.Sc)</div>
                     <div class="info-card-sub" style="color: #475569; font-weight: normal;">{edu_pg}</div>
                 </div>
-
                 <div class="info-card">
                     <div class="info-card-title">Graduation (B.Sc)</div>
                     <div class="info-card-sub" style="color: #475569; font-weight: normal;">{edu_grad}</div>
                 </div>
-
                 <div class="info-card">
                     <div class="info-card-title">Higher Secondary (12th - I.Sc)</div>
                     <div class="info-card-sub" style="color: #475569; font-weight: normal;">{edu_12th}</div>
                 </div>
-
                 <div class="info-card">
                     <div class="info-card-title">Secondary (10th)</div>
                     <div class="info-card-sub" style="color: #475569; font-weight: normal;">{edu_10th}</div>
                 </div>
-
             </td>
 
-            <!-- Right Column: Tech, Competencies, Personal Details, Hobbies -->
             <td style="width: 50%; vertical-align: top; padding-left: 10px; border: none;">
-                
                 <div class="section-title">TECHNICAL QUALIFICATION</div>
                 <div class="info-card">
                     <div class="info-card-title">{tech_qual}</div>
@@ -355,12 +333,10 @@ st.markdown(f"""
                 <div class="info-card">
                     <div class="info-card-desc" style="color: #1e293b;">{hobbies}</div>
                 </div>
-
             </td>
         </tr>
     </table>
 
-    <!-- Declaration -->
     <div class="declaration-box">
         <div style="font-size: 11px; font-weight: 700; color: #1e293b; margin-bottom: 3px;">Declaration</div>
         <div style="font-size: 10px; color: #475569; font-style: italic;">I hereby declare that all the information provided above is true and correct to the best of my knowledge and belief.</div>
@@ -372,6 +348,8 @@ st.markdown(f"""
             </tr>
         </table>
     </div>
-
 </div>
-""", unsafe_allow_html=True)
+"""
+
+# Render with HTML Mode
+st.markdown(html_content, unsafe_allow_html=True)
