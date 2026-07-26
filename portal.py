@@ -81,7 +81,7 @@ with m_col1:
         <div class="module-card">
             <h4>📊 Quotation Generator</h4>
             <p style="font-size: 13px; color: #9CA3AF; height: 50px;">Quickly generate standard L1, L2, L3 quotation PDFs with automated pricing calculation and company layout.</p>
-            <a href="https://koshi-quotation-6q7gyn9uew5juafcpvroes.streamlit.app/" target="_blank" class="btn-link">Open Quotation Generator 🚀</a>
+            <a href="https://koshi-quotation-opgwbqipckeu9vji2vewe6.streamlit.app/" target="_blank" class="btn-link">Open Quotation Generator 🚀</a>
         </div>
     """, unsafe_allow_html=True)
 
@@ -90,7 +90,7 @@ with m_col2:
         <div class="module-card">
             <h4>📄 Letterhead Generator</h4>
             <p style="font-size: 13px; color: #9CA3AF; height: 50px;">Create official Koshi Enterprises letterhead documents with aligned headers, footer details, and printable formatting.</p>
-            <a href="https://koshi-quotation-6q7gyn9uew5juafcpvroes.streamlit.app/" target="_blank" class="btn-link">Open Letterhead Generator 🚀</a>
+            <a href="https://koshi-letterhead-hg9ddeynmdfufmtvascpah.streamlit.app/" target="_blank" class="btn-link">Open Letterhead Generator 🚀</a>
         </div>
     """, unsafe_allow_html=True)
 
