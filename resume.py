@@ -7,7 +7,7 @@ st.set_page_config(
     layout="wide"
 )
 
-# Global Custom CSS
+# Custom Global Styling
 st.markdown("""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
@@ -221,7 +221,7 @@ with st.sidebar:
     edu_pg = st.text_input("M.Sc", "B.N.M.U Madhepura | Passed 2023")
     edu_grad = st.text_input("B.Sc", "B.N.M.U Madhepura | Passed 2020")
     edu_12th = st.text_input("12th", "B.S.E.B Patna | Passed 2016")
-    edu_10th = st.text_input("10th", "B.S.E.B Patna | Passed 2014")
+    edu_10th = st.text_input("10th", "B.S.E.B Patna Passed 2014")
 
     st.markdown("---")
     st.subheader("Technical & Competencies")
@@ -238,7 +238,7 @@ with st.sidebar:
     marital_status = st.selectbox("Marital Status", ["Single", "Married"])
     hobbies = st.text_input("Hobbies & Interests", "Watching news & engaged in creative activities.")
 
-# Image Base64 Processing
+# Photo Base64
 if photo_file is not None:
     bytes_data = photo_file.getvalue()
     base64_image = base64.b64encode(bytes_data).decode()
@@ -249,107 +249,96 @@ else:
 skills_list = [s.strip() for s in skills.split(",") if s.strip()]
 skills_html = "".join([f"<li>{s}</li>" for s in skills_list])
 
-# Direct Print Button
+# Direct Print Trigger Button
 st.components.v1.html("""
-    <button onclick="window.parent.print()" style="background-color: #0284c7; color: white; border: none; padding: 10px 24px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 15px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); margin-bottom: 10px;">
-        🖨️ Print / Save as PDF
-    </button>
+<button onclick="window.parent.print()" style="background-color: #0284c7; color: white; border: none; padding: 10px 24px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 15px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); margin-bottom: 10px;">
+    🖨️ Print / Save as PDF
+</button>
 """, height=50)
 
-# Unindented Clean HTML Construction to prevent Markdown code block triggering
-html_content = f"""
-<div id="printableArea">
-    <div class="resume-header">
-        <div class="header-info">
-            <h1>{full_name}</h1>
-            <div class="sub-title">{designation}</div>
-            <div class="header-contact">
-                📍 <b>Address:</b> {address}<br>
-                📞 <b>Phone:</b> {phone} &nbsp;|&nbsp; ✉️ <b>Email:</b> {email}
-            </div>
-        </div>
-        <div class="photo-box">
-            {photo_html}
-        </div>
-    </div>
-
-    <table style="width: 100%; border-collapse: collapse; table-layout: fixed;">
-        <tr>
-            <td style="width: 50%; vertical-align: top; padding-right: 10px; border: none;">
-                <div class="section-title">WORK EXPERIENCE</div>
-                <div class="info-card">
-                    <div class="info-card-title">{exp1_company}</div>
-                    <div class="info-card-sub">{exp1_duration}</div>
-                    <div class="info-card-desc">{exp1_desc}</div>
-                </div>
-                <div class="info-card">
-                    <div class="info-card-title">{exp2_company}</div>
-                    <div class="info-card-sub">{exp2_duration}</div>
-                    <div class="info-card-desc">{exp2_desc}</div>
-                </div>
-
-                <div class="section-title">EDUCATION QUALIFICATION</div>
-                <div class="info-card">
-                    <div class="info-card-title">Post Graduation (M.Sc)</div>
-                    <div class="info-card-sub" style="color: #475569; font-weight: normal;">{edu_pg}</div>
-                </div>
-                <div class="info-card">
-                    <div class="info-card-title">Graduation (B.Sc)</div>
-                    <div class="info-card-sub" style="color: #475569; font-weight: normal;">{edu_grad}</div>
-                </div>
-                <div class="info-card">
-                    <div class="info-card-title">Higher Secondary (12th - I.Sc)</div>
-                    <div class="info-card-sub" style="color: #475569; font-weight: normal;">{edu_12th}</div>
-                </div>
-                <div class="info-card">
-                    <div class="info-card-title">Secondary (10th)</div>
-                    <div class="info-card-sub" style="color: #475569; font-weight: normal;">{edu_10th}</div>
-                </div>
-            </td>
-
-            <td style="width: 50%; vertical-align: top; padding-left: 10px; border: none;">
-                <div class="section-title">TECHNICAL QUALIFICATION</div>
-                <div class="info-card">
-                    <div class="info-card-title">{tech_qual}</div>
-                    <div class="info-card-desc" style="margin-top: 1px;">{tech_qual_desc}</div>
-                </div>
-
-                <div class="section-title">KEY COMPETENCIES</div>
-                <ul class="competencies-list">
-                    {skills_html}
-                </ul>
-
-                <div class="section-title">PERSONAL DETAILS</div>
-                <table class="personal-table">
-                    <tr><td style="width: 42%;"><b>D.O.B:</b></td><td>{dob}</td></tr>
-                    <tr><td><b>Gender:</b></td><td>{gender}</td></tr>
-                    <tr><td><b>Father's Name:</b></td><td>{father_name}</td></tr>
-                    <tr><td><b>Languages:</b></td><td>{languages}</td></tr>
-                    <tr><td><b>Marital Status:</b></td><td>{marital_status}</td></tr>
-                    <tr><td><b>Nationality:</b></td><td>Indian</td></tr>
-                </table>
-
-                <div class="section-title">HOBBIES & INTERESTS</div>
-                <div class="info-card">
-                    <div class="info-card-desc" style="color: #1e293b;">{hobbies}</div>
-                </div>
-            </td>
-        </tr>
-    </table>
-
-    <div class="declaration-box">
-        <div style="font-size: 11px; font-weight: 700; color: #1e293b; margin-bottom: 3px;">Declaration</div>
-        <div style="font-size: 10px; color: #475569; font-style: italic;">I hereby declare that all the information provided above is true and correct to the best of my knowledge and belief.</div>
-        
-        <table style="width: 100%; margin-top: 20px; font-size: 10.5px; color: #1e293b; border: none;">
-            <tr>
-                <td style="border: none; padding: 0;"><b>Place:</b> Saharsa<br><b>Date:</b> ___________</td>
-                <td style="border: none; padding: 0; text-align: right; vertical-align: bottom;"><b>({full_name})</b></td>
-            </tr>
-        </table>
-    </div>
+# Unindented Flat String (Strictly Avoids Markdown Code Block Rendering)
+html_content = f"""<div id="printableArea">
+<div class="resume-header">
+<div class="header-info">
+<h1>{full_name}</h1>
+<div class="sub-title">{designation}</div>
+<div class="header-contact">📍 <b>Address:</b> {address}<br>📞 <b>Phone:</b> {phone} &nbsp;|&nbsp; ✉️ <b>Email:</b> {email}</div>
 </div>
-"""
+<div class="photo-box">{photo_html}</div>
+</div>
 
-# Render with HTML Mode
+<table style="width: 100%; border-collapse: collapse; table-layout: fixed;">
+<tr>
+<td style="width: 50%; vertical-align: top; padding-right: 10px; border: none;">
+<div class="section-title">WORK EXPERIENCE</div>
+<div class="info-card">
+<div class="info-card-title">{exp1_company}</div>
+<div class="info-card-sub">{exp1_duration}</div>
+<div class="info-card-desc">{exp1_desc}</div>
+</div>
+<div class="info-card">
+<div class="info-card-title">{exp2_company}</div>
+<div class="info-card-sub">{exp2_duration}</div>
+<div class="info-card-desc">{exp2_desc}</div>
+</div>
+
+<div class="section-title">EDUCATION QUALIFICATION</div>
+<div class="info-card">
+<div class="info-card-title">Post Graduation (M.Sc)</div>
+<div class="info-card-sub" style="color: #475569; font-weight: normal;">{edu_pg}</div>
+</div>
+<div class="info-card">
+<div class="info-card-title">Graduation (B.Sc)</div>
+<div class="info-card-sub" style="color: #475569; font-weight: normal;">{edu_grad}</div>
+</div>
+<div class="info-card">
+<div class="info-card-title">Higher Secondary (12th - I.Sc)</div>
+<div class="info-card-sub" style="color: #475569; font-weight: normal;">{edu_12th}</div>
+</div>
+<div class="info-card">
+<div class="info-card-title">Secondary (10th)</div>
+<div class="info-card-sub" style="color: #475569; font-weight: normal;">{edu_10th}</div>
+</div>
+</td>
+
+<td style="width: 50%; vertical-align: top; padding-left: 10px; border: none;">
+<div class="section-title">TECHNICAL QUALIFICATION</div>
+<div class="info-card">
+<div class="info-card-title">{tech_qual}</div>
+<div class="info-card-desc" style="margin-top: 1px;">{tech_qual_desc}</div>
+</div>
+
+<div class="section-title">KEY COMPETENCIES</div>
+<ul class="competencies-list">{skills_html}</ul>
+
+<div class="section-title">PERSONAL DETAILS</div>
+<table class="personal-table">
+<tr><td style="width: 42%;"><b>D.O.B:</b></td><td>{dob}</td></tr>
+<tr><td><b>Gender:</b></td><td>{gender}</td></tr>
+<tr><td><b>Father's Name:</b></td><td>{father_name}</td></tr>
+<tr><td><b>Languages:</b></td><td>{languages}</td></tr>
+<tr><td><b>Marital Status:</b></td><td>{marital_status}</td></tr>
+<tr><td><b>Nationality:</b></td><td>Indian</td></tr>
+</table>
+
+<div class="section-title">HOBBIES & INTERESTS</div>
+<div class="info-card">
+<div class="info-card-desc" style="color: #1e293b;">{hobbies}</div>
+</div>
+</td>
+</tr>
+</table>
+
+<div class="declaration-box">
+<div style="font-size: 11px; font-weight: 700; color: #1e293b; margin-bottom: 3px;">Declaration</div>
+<div style="font-size: 10px; color: #475569; font-style: italic;">I hereby declare that all the information provided above is true and correct to the best of my knowledge and belief.</div>
+<table style="width: 100%; margin-top: 20px; font-size: 10.5px; color: #1e293b; border: none;">
+<tr>
+<td style="border: none; padding: 0;"><b>Place:</b> Saharsa<br><b>Date:</b> ___________</td>
+<td style="border: none; padding: 0; text-align: right; vertical-align: bottom;"><b>({full_name})</b></td>
+</tr>
+</table>
+</div>
+</div>"""
+
 st.markdown(html_content, unsafe_allow_html=True)
