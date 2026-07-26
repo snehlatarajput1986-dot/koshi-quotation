@@ -233,3 +233,26 @@ with col2:
         use_container_width=True
     )
     components.html(quotation_html, height=750, scrolling=True)
+import streamlit as st
+
+# --- APNE PURE CODE KE BILKUL LAST ME ISE PASTE KAREIN ---
+st.markdown("""
+<style>
+    /* Page Scrolling ko smooth aur stable banane ke liye */
+    html, body, [data-testid="stAppViewContainer"] {
+        overflow-x: hidden !important;
+        scroll-behavior: smooth;
+    }
+
+    /* Layout shifting aur shaking (garbane) ko rokne ke liye */
+    [data-testid="stVerticalBlock"] {
+        transform: translateZ(0);
+        backface-visibility: hidden;
+    }
+
+    /* Inputs aur containers ki positioning fix karne ke liye */
+    input, textarea, select {
+        max-width: 100% !important;
+    }
+</style>
+""", unsafe_allow_html=True)
