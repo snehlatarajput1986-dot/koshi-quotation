@@ -1,191 +1,104 @@
 import streamlit as st
 
-# Page Configuration
 st.set_page_config(
-    page_title="Koshi Enterprises Portal",
-    page_icon="🔮",
-    layout="wide",
-    initial_sidebar_state="expanded"
+    page_title="Koshi Enterprises - Workspace Portal",
+    page_icon="🏢",
+    layout="wide"
 )
 
-# Custom High-Contrast CSS for Dark Purple Theme
+# Custom Workspace Styling
 st.markdown("""
     <style>
-    /* Main Dark Background */
-    .stApp {
-        background: radial-gradient(circle at top center, #1e0b36 0%, #0d021a 70%, #05010a 100%);
-        color: #FFFFFF !important;
-    }
-    
-    /* Force All Text & Headers to Bright Colors */
-    p, span, label, h1, h2, h3, h4, h5, h6, div {
-        color: #F3E8FF !important;
-    }
-
-    /* Sidebar Fixes for Visibility */
-    section[data-testid="stSidebar"] {
-        background-color: #0b0314 !important;
-        border-right: 1px solid #3b1366;
-    }
-    section[data-testid="stSidebar"] p, 
-    section[data-testid="stSidebar"] span, 
-    section[data-testid="stSidebar"] div,
-    section[data-testid="stSidebar"] h3 {
-        color: #E2E8F0 !important;
-    }
-    section[data-testid="stSidebar"] .stCaption {
-        color: #94A3B8 !important;
-    }
-
-    /* Sidebar Links Bright Blue/Cyan */
-    section[data-testid="stSidebar"] a {
-        color: #38BDF8 !important;
-        font-weight: 600;
-        text-decoration: none;
-    }
-
-    /* Hero Banner */
-    .hero-box {
-        background: linear-gradient(135deg, rgba(147, 51, 234, 0.3) 0%, rgba(79, 70, 229, 0.3) 100%);
-        border: 1px solid #a855f7;
-        border-radius: 16px;
-        padding: 30px;
-        text-align: center;
-        box-shadow: 0 0 25px rgba(168, 85, 247, 0.3);
-        margin-bottom: 25px;
-    }
-    .status-pill {
-        background: #a855f7;
-        color: #FFFFFF !important;
-        padding: 4px 14px;
-        border-radius: 20px;
-        font-size: 12px;
-        font-weight: 700;
-        display: inline-block;
-        margin-bottom: 12px;
-        box-shadow: 0 0 10px #a855f7;
-    }
-    .hero-title {
-        font-size: 30px;
-        font-weight: 800;
-        color: #FFFFFF !important;
-        text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
-    }
-    .hero-desc {
-        color: #E0E7FF !important;
-        font-size: 14px;
-    }
-
-    /* Metrics Label & Value Color Fix */
-    div[data-testid="stMetric"] {
-        background: rgba(23, 10, 41, 0.8) !important;
-        padding: 15px 20px;
+    .portal-header {
+        background: linear-gradient(135deg, #1E1E2E 0%, #2A2D3E 100%);
+        padding: 25px;
         border-radius: 12px;
-        border: 1px solid #581c87;
-        box-shadow: 0 4px 15px rgba(147, 51, 234, 0.15);
+        color: white;
+        margin-bottom: 25px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
     }
-    div[data-testid="stMetricLabel"] p {
-        color: #C084FC !important;
-        font-weight: 600;
+    .metric-card {
+        background: #1E1E2E;
+        color: white;
+        padding: 15px;
+        border-radius: 8px;
+        border: 1px solid #3A3D52;
+        text-align: center;
     }
-    div[data-testid="stMetricValue"] div {
-        color: #FFFFFF !important;
-    }
-
-    /* Cards Fix */
     .module-card {
-        background: rgba(23, 10, 41, 0.9);
-        border-radius: 14px;
-        padding: 24px;
-        border: 1px solid #7e22ce;
-        box-shadow: 0 0 15px rgba(126, 34, 206, 0.2);
-        margin-bottom: 15px;
+        background: #1E1E2E;
+        border: 1px solid #3A3D52;
+        border-radius: 10px;
+        padding: 20px;
+        margin-bottom: 20px;
+        color: white;
     }
-    .module-title {
-        font-size: 20px;
-        font-weight: 700;
-        color: #FFFFFF !important;
-        margin-bottom: 8px;
+    .btn-link {
+        display: inline-block;
+        width: 100%;
+        background-color: #6366F1;
+        color: white !important;
+        text-align: center;
+        padding: 10px 0;
+        border-radius: 6px;
+        text-decoration: none;
+        font-weight: bold;
+        margin-top: 15px;
     }
-    .module-desc {
-        font-size: 14px;
-        color: #CBD5E1 !important;
-        line-height: 1.5;
-    }
-    
-    /* Button Styling */
-    div.stLinkButton>a {
-        background: linear-gradient(90deg, #9333ea 0%, #c084fc 100%) !important;
-        color: #FFFFFF !important;
-        border: none !important;
-        font-weight: bold !important;
-        box-shadow: 0 0 12px rgba(168, 85, 247, 0.5) !important;
+    .btn-link:hover {
+        background-color: #4F46E5;
     }
     </style>
 """, unsafe_allow_html=True)
 
-# ----------------- SIDEBAR -----------------
-with st.sidebar:
-    st.markdown("### 🏢 Koshi Enterprises")
-    st.caption("Central Workspace Portal")
-    
-    st.divider()
-    
-    st.markdown("📌 **Quick Nav**")
-    st.markdown("• [Quotation Generator](https://koshi-quotation-opgwbqipckeu9vji2vewe6.streamlit.app/)")
-    st.markdown("• [Letterhead Generator](https://koshi-letterhead-hg9ddeynmdfufmtvascpah.streamlit.app/)")
-    
-    st.divider()
-    
-    st.markdown("📞 **Support & Info**")
-    st.caption("For system updates or technical issues, contact admin team.")
-    
-    st.markdown("📱 **Phone:** +91 8864097233")
-    st.markdown("✉️ **Email:** prashantkumarsaharsa5@gmail.com")
-    
-    st.caption("Last sync: 25 Jul 2026")
-
-# ----------------- MAIN PORTAL -----------------
-
-# Top Hero Banner
+# Workspace Header
 st.markdown("""
-    <div class="hero-box">
-        <div class="status-pill">⚡ SYSTEM OPERATIONAL & ONLINE</div>
-        <div class="hero-title">🏢 Koshi Enterprises Workspace</div>
-        <div class="hero-desc">Centralized portal to access all official business documents and generation tools.</div>
+    <div class="portal-header">
+        <span style="background-color: #312E81; color: #A5B4FC; padding: 4px 10px; border-radius: 12px; font-size: 12px; font-weight: bold;">● SYSTEM OPERATIONAL & ONLINE</span>
+        <h2 style="margin: 10px 0 5px 0;">🏢 Koshi Enterprises Workspace</h2>
+        <p style="margin: 0; color: #9CA3AF;">Centralized portal to access all official business documents and generation tools.</p>
     </div>
 """, unsafe_allow_html=True)
 
-# Status Metrics
+# Top Metrics Bar
 col1, col2, col3, col4 = st.columns(4)
-col1.metric(label="System Status", value="Active")
-col2.metric(label="Available Tools", value="2 Active")
-col3.metric(label="Security Protocol", value="SSL 256-bit")
-col4.metric(label="Portal Version", value="v2.1 Pro")
+with col1:
+    st.markdown("<div class='metric-card'><small>System Status</small><h3>Active</h3></div>", unsafe_allow_html=True)
+with col2:
+    st.markdown("<div class='metric-card'><small>Available Tools</small><h3>3 Active</h3></div>", unsafe_allow_html=True)
+with col3:
+    st.markdown("<div class='metric-card'><small>Security Protocol</small><h3>SSL 256-bit</h3></div>", unsafe_allow_html=True)
+with col4:
+    st.markdown("<div class='metric-card'><small>Portal Version</small><h3>v2.2 Pro</h3></div>", unsafe_allow_html=True)
 
-st.markdown("<br>", unsafe_allow_html=True)
-st.markdown("### ⚡ Available Workspace Modules")
+st.markdown("<br><h3>⚡ Available Workspace Modules</h3>", unsafe_allow_html=True)
 
-# Module Cards & Open Buttons
-col_a, col_b = st.columns(2)
+# Module Cards Layout (3 Columns for 3 Tools)
+m_col1, m_col2, m_col3 = st.columns(3)
 
-with col_a:
+with m_col1:
     st.markdown("""
         <div class="module-card">
-            <div class="module-title">📊 Quotation Generator</div>
-            <div class="module-desc">Quickly generate standard L1, L2, L3 quotation PDFs with automated pricing calculation, tax rules, and company layout.</div>
+            <h4>📊 Quotation Generator</h4>
+            <p style="font-size: 13px; color: #9CA3AF; height: 50px;">Quickly generate standard L1, L2, L3 quotation PDFs with automated pricing calculation and company layout.</p>
+            <a href="https://koshi-quotation.streamlit.app/" target="_blank" class="btn-link">Open Quotation Generator 🚀</a>
         </div>
     """, unsafe_allow_html=True)
-    st.link_button("Open Quotation Generator 🚀", "https://koshi-quotation-opgwbqipckeu9vji2vewe6.streamlit.app/", use_container_width=True)
 
-with col_b:
+with m_col2:
     st.markdown("""
         <div class="module-card">
-            <div class="module-title">📑 Letterhead Generator</div>
-            <div class="module-desc">Create official Koshi Enterprises letterhead documents with aligned headers, footer details, and printable formatting.</div>
+            <h4>📄 Letterhead Generator</h4>
+            <p style="font-size: 13px; color: #9CA3AF; height: 50px;">Create official Koshi Enterprises letterhead documents with aligned headers, footer details, and printable formatting.</p>
+            <a href="https://koshi-letterhead.streamlit.app/" target="_blank" class="btn-link">Open Letterhead Generator 🚀</a>
         </div>
     """, unsafe_allow_html=True)
-    st.link_button("Open Letterhead Generator 🚀", "https://koshi-letterhead-hg9ddeynmdfufmtvascpah.streamlit.app/", use_container_width=True)
 
-st.markdown("---")
-st.caption("© 2026 Koshi Enterprises. All rights reserved.")
+with m_col3:
+    st.markdown("""
+        <div class="module-card">
+            <h4>📝 Resume Builder</h4>
+            <p style="font-size: 13px; color: #9CA3AF; height: 50px;">Create professional resumes with live preview, customizable sections, and instant print/PDF download option.</p>
+            <a href="https://koshi-quotation-finzqjhfwlm8nsc8pxnguq.streamlit.app/" target="_blank" class="btn-link">Open Resume Builder 🚀</a>
+        </div>
+    """, unsafe_allow_html=True)
