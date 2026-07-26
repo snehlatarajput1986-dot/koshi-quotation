@@ -4,6 +4,58 @@ import pandas as pd
 
 st.set_page_config(page_title="Custom Multi-Format Quotation Generator", page_icon="📄", layout="wide")
 
+# --- DARK PURPLE THEME & STABILITY CSS ---
+st.markdown("""
+<style>
+    /* Main Background & Font */
+    .stApp {
+        background: linear-gradient(135deg, #0d061a 0%, #1a0b2e 50%, #0d061a 100%);
+        color: #ffffff;
+    }
+    
+    /* Sidebar Styling */
+    [data-testid="stSidebar"] {
+        background-color: #130722;
+        border-right: 1px solid rgba(168, 85, 247, 0.2);
+    }
+    
+    /* Input Fields Styling */
+    input, textarea, select {
+        background-color: #1e1136 !important;
+        color: #ffffff !important;
+        border: 1px solid rgba(168, 85, 247, 0.4) !important;
+        border-radius: 8px !important;
+        max-width: 100% !important;
+    }
+    
+    /* Buttons Styling */
+    .stButton>button, .stDownloadButton>button {
+        background: linear-gradient(90deg, #9333ea 0%, #c084fc 100%);
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-weight: bold;
+        box-shadow: 0 4px 15px rgba(147, 51, 234, 0.4);
+    }
+
+    /* Headers Styling */
+    h1, h2, h3 {
+        color: #f3e8ff !important;
+    }
+
+    /* Page Scrolling & Stability (Garba/Shaking Fix) */
+    html, body, [data-testid="stAppViewContainer"] {
+        overflow-x: hidden !important;
+        scroll-behavior: smooth;
+    }
+
+    [data-testid="stVerticalBlock"] {
+        transform: translateZ(0);
+        backface-visibility: hidden;
+    }
+</style>
+""", unsafe_allow_html=True)
+
 st.title("📄 Multi-Format Comparative Quotation Generator")
 
 st.sidebar.header("⚙️ Select Firm & Layout")
@@ -57,7 +109,7 @@ with col1:
     st.subheader("📝 Words & Remarks")
     amt_words = st.text_input("Amount in Words", value="Enter amount in words...")
 
-# --- GENERATE SPECIFIC HTML LAYOUTS ---
+# --- GENERATE SPECIFIC HTML LAYOUTS WITH DARK THEME SUPPORT ---
 items_list = []
 grand_total = 0.0
 
@@ -90,13 +142,13 @@ if "1. KOSHI ENTERPRISES" in comp_selection:
     quotation_html = f"""
     <!DOCTYPE html><html><head><style>
     * {{ -webkit-print-color-adjust: exact !important; box-sizing: border-box; }}
-    body {{ font-family: Arial, sans-serif; margin: 0; padding: 10px; }}
-    .q-container {{ max-width: 800px; margin: 0 auto; border: 2px solid #0052cc; padding: 20px; }}
+    body {{ font-family: Arial, sans-serif; margin: 0; padding: 10px; background-color: #0d061a !important; color: #ffffff !important; }}
+    .q-container {{ max-width: 800px; margin: 0 auto; border: 2px solid #a855f7; padding: 20px; background-color: #1a0b2e !important; border-radius: 8px; }}
     .header {{ background: linear-gradient(135deg, #002b80, #0052cc); color: white; padding: 15px; text-align: center; border-radius: 5px; }}
-    .item-table {{ width: 100%; border-collapse: collapse; margin-top: 15px; }}
+    .item-table {{ width: 100%; border-collapse: collapse; margin-top: 15px; color: #fff; }}
     .item-table th {{ background-color: #002b80; color: white; padding: 8px; text-align: left; font-size: 13px; }}
-    .item-table td {{ border: 1px solid #ddd; padding: 8px; font-size: 13px; }}
-    .total-box {{ background-color: #f0f4f9; border: 1px solid #0052cc; padding: 10px; text-align: right; font-size: 16px; font-weight: bold; color: #002b80; margin-top: 15px; }}
+    .item-table td {{ border: 1px solid #443366; padding: 8px; font-size: 13px; }}
+    .total-box {{ background-color: #2b184a; border: 1px solid #a855f7; padding: 10px; text-align: right; font-size: 16px; font-weight: bold; color: #f3e8ff; margin-top: 15px; }}
     </style></head><body>
     <div class="q-container">
         <div class="header">
@@ -138,29 +190,29 @@ elif "2. R.T. ENTERPRISES" in comp_selection:
     quotation_html = f"""
     <!DOCTYPE html><html><head><style>
     * {{ -webkit-print-color-adjust: exact !important; box-sizing: border-box; }}
-    body {{ font-family: Arial, sans-serif; margin: 0; padding: 10px; }}
-    .rt-box {{ max-width: 800px; margin: 0 auto; border: 1.5px solid #000; padding: 20px; }}
-    .title-head {{ border-bottom: 2px solid #000; padding-bottom: 10px; margin-bottom: 15px; display:flex; justify-content:space-between; align-items:center; }}
-    .rt-table {{ width: 100%; border-collapse: collapse; margin-top: 10px; }}
-    .rt-table th, .rt-table td {{ border: 1px solid #000; padding: 6px 8px; font-size: 12px; }}
+    body {{ font-family: Arial, sans-serif; margin: 0; padding: 10px; background-color: #0d061a !important; color: #ffffff !important; }}
+    .rt-box {{ max-width: 800px; margin: 0 auto; border: 1.5px solid #a855f7; padding: 20px; background-color: #1a0b2e !important; border-radius: 8px; }}
+    .title-head {{ border-bottom: 2px solid #a855f7; padding-bottom: 10px; margin-bottom: 15px; display:flex; justify-content:space-between; align-items:center; }}
+    .rt-table {{ width: 100%; border-collapse: collapse; margin-top: 10px; color: #fff; }}
+    .rt-table th, .rt-table td {{ border: 1px solid #443366; padding: 6px 8px; font-size: 12px; }}
     </style></head><body>
     <div class="rt-box">
         <div class="title-head">
             <div>
-                <h2 style="margin:0; font-size:22px; letter-spacing:1px;">R.T. ENTERPRISES</h2>
-                <p style="margin:2px 0; font-size:11px;">NEW COLONY, SAHARSA, BIHAR - 852201</p>
-                <p style="margin:0; font-size:11px;">GSTIN: 10CIRPT5717JIZU | Mobile: +91 9113164314</p>
+                <h2 style="margin:0; font-size:22px; letter-spacing:1px; color:#f3e8ff;">R.T. ENTERPRISES</h2>
+                <p style="margin:2px 0; font-size:11px; color:#d8b4fe;">NEW COLONY, SAHARSA, BIHAR - 852201</p>
+                <p style="margin:0; font-size:11px; color:#d8b4fe;">GSTIN: 10CIRPT5717JIZU | Mobile: +91 9113164314</p>
             </div>
-            <div style="border:1px solid #000; padding:5px 15px; font-weight:bold; font-size:16px;">QUOTATION</div>
+            <div style="border:1px solid #a855f7; padding:5px 15px; font-weight:bold; font-size:16px; color:#f3e8ff;">QUOTATION</div>
         </div>
-        <table style="width:100%; font-size:12px; margin-bottom:15px; border-bottom:1px solid #000; padding-bottom:10px;">
+        <table style="width:100%; font-size:12px; margin-bottom:15px; border-bottom:1px solid #443366; padding-bottom:10px;">
             <tr>
                 <td style="width:50%;"><b>QUOTATION ISSUED TO:</b><br>{billed_to.replace('\n', '<br>')}</td>
                 <td style="width:50%; vertical-align:top;"><b>SUPPLIER DETAILS:</b><br>R.T. ENTERPRISES<br>New Colony, Saharsa, Bihar 852201<br>Ref No: {ref_no} | Date: {q_date}</td>
             </tr>
         </table>
         <table class="rt-table">
-            <thead><tr style="background:#f2f2f2;"><th>S.N.</th><th>DESCRIPTION OF GOODS</th><th>QTY</th><th>PER</th><th>RATE (₹)</th><th>AMOUNT (₹)</th></tr></thead>
+            <thead><tr style="background:#2b184a;"><th>S.N.</th><th>DESCRIPTION OF GOODS</th><th>QTY</th><th>PER</th><th>RATE (₹)</th><th>AMOUNT (₹)</th></tr></thead>
             <tbody>
                 {rows_html}
                 <tr><td colspan="5" style="text-align:right;"><b>Subtotal</b></td><td style="text-align:right;">{grand_total:,.2f}</td></tr>
@@ -190,17 +242,17 @@ else:
     quotation_html = f"""
     <!DOCTYPE html><html><head><style>
     * {{ -webkit-print-color-adjust: exact !important; box-sizing: border-box; }}
-    body {{ font-family: Arial, sans-serif; margin: 0; padding: 10px; }}
-    .m-box {{ max-width: 800px; margin: 0 auto; border: 1px solid #888; padding: 20px; }}
-    .m-head {{ text-align: center; color: #b30000; border-bottom:2px solid #b30000; padding-bottom:8px; }}
-    .m-table {{ width: 100%; border-collapse: collapse; margin-top: 15px; }}
-    .m-table th, .m-table td {{ border: 1px solid #aaa; padding: 6px; font-size: 12px; }}
+    body {{ font-family: Arial, sans-serif; margin: 0; padding: 10px; background-color: #0d061a !important; color: #ffffff !important; }}
+    .m-box {{ max-width: 800px; margin: 0 auto; border: 1px solid #a855f7; padding: 20px; background-color: #1a0b2e !important; border-radius: 8px; }}
+    .m-head {{ text-align: center; color: #ff6666; border-bottom:2px solid #a855f7; padding-bottom:8px; }}
+    .m-table {{ width: 100%; border-collapse: collapse; margin-top: 15px; color: #fff; }}
+    .m-table th, .m-table td {{ border: 1px solid #443366; padding: 6px; font-size: 12px; }}
     </style></head><body>
     <div class="m-box">
         <div class="m-head">
-            <h2 style="margin:0; font-size:22px; color:#a00000;">NEW MANORMA ENTERPRISES</h2>
-            <p style="margin:2px 0; font-size:11px; color:#333;">RAJENDRA NAGAR, WARD NO. 02, SUPAUL</p>
-            <p style="margin:0; font-size:11px; color:#333;">GSTIN: 10AZGPM9227L1Z7 | Mobile: +91 7362821383</p>
+            <h2 style="margin:0; font-size:22px; color:#ff8080;">NEW MANORMA ENTERPRISES</h2>
+            <p style="margin:2px 0; font-size:11px; color:#d8b4fe;">RAJENDRA NAGAR, WARD NO. 02, SUPAUL</p>
+            <p style="margin:0; font-size:11px; color:#d8b4fe;">GSTIN: 10AZGPM9227L1Z7 | Mobile: +91 7362821383</p>
         </div>
         <table style="width:100%; font-size:12px; margin: 15px 0;">
             <tr>
@@ -209,7 +261,7 @@ else:
             </tr>
         </table>
         <table class="m-table">
-            <thead><tr style="background:#f9f9f9;"><th>S.N.</th><th>DESCRIPTION OF GOODS</th><th>QTY</th><th>PER</th><th>RATE (₹)</th><th>AMOUNT (₹)</th></tr></thead>
+            <thead><tr style="background:#2b184a;"><th>S.N.</th><th>DESCRIPTION OF GOODS</th><th>QTY</th><th>PER</th><th>RATE (₹)</th><th>AMOUNT (₹)</th></tr></thead>
             <tbody>
                 {rows_html}
                 <tr><td colspan="5" style="text-align:right;"><b>Sub Total:</b></td><td style="text-align:right;">{grand_total:,.2f}</td></tr>
@@ -218,7 +270,7 @@ else:
             </tbody>
         </table>
         <p style="font-size:12px; margin-top:10px;"><b>Amount in Words:</b> {amt_words}</p>
-        <p style="font-size:11px; color:#555;"><b>Terms & Conditions:</b><br>• ALL FREIGHT AND TAXES INCLUDED.<br>• Payment as per agreed terms.<br>• Goods once sold will not be taken back without prior approval.</p>
+        <p style="font-size:11px; color:#d8b4fe;"><b>Terms & Conditions:</b><br>• ALL FREIGHT AND TAXES INCLUDED.<br>• Payment as per agreed terms.<br>• Goods once sold will not be taken back without prior approval.</p>
         <p style="text-align:center; font-style:italic; font-size:12px; margin-top:15px;">Thank you for your business!</p>
         <div style="text-align:right; margin-top:20px; font-size:12px;"><p style="margin-bottom:40px;">For <b>NEW MANORMA ENTERPRISES</b></p><p>Authorized Signatory</p></div>
     </div></body></html>"""
@@ -233,37 +285,3 @@ with col2:
         use_container_width=True
     )
     components.html(quotation_html, height=750, scrolling=True)
-import streamlit as st
-
-# --- APNE PURE CODE KE BILKUL LAST ME ISE PASTE KAREIN ---
-st.markdown("""
-<style>
-    /* Page Scrolling ko smooth aur stable banane ke liye */
-    html, body, [data-testid="stAppViewContainer"] {
-        overflow-x: hidden !important;
-        scroll-behavior: smooth;
-    }
-
-    /* Layout shifting aur shaking (garbane) ko rokne ke liye */
-    [data-testid="stVerticalBlock"] {
-        transform: translateZ(0);
-        backface-visibility: hidden;
-    }
-
-    /* Inputs aur containers ki positioning fix karne ke liye */
-    input, textarea, select {
-        max-width: 100% !important;
-    }
-</style>
-""", unsafe_allow_html=True)
-<style>
-    body {
-        background-color: #0d061a !important;
-        color: #ffffff !important;
-    }
-    .q-container, .rt-box, .m-box {
-        background-color: #1a0b2e !important;
-        color: #ffffff !important;
-        border: 1px solid rgba(168, 85, 247, 0.4) !important;
-    }
-</style>
