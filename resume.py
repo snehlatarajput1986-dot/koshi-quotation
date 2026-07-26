@@ -7,7 +7,7 @@ st.set_page_config(
     layout="wide"
 )
 
-# Global Custom Styling & Print Rules for Exact A4 Fit
+# Global Styling & Print CSS for Perfect Full A4 Height & Spacing
 st.markdown("""
     <style>
     .main-title {
@@ -19,15 +19,16 @@ st.markdown("""
         background-color: #ffffff;
         border: 1px solid #cbd5e1;
         border-radius: 4px;
-        padding: 30px;
+        padding: 35px 40px;
         color: #000000;
-        font-family: Arial, Helvetica, sans-serif;
-        max-width: 800px;
+        font-family: 'Segoe UI', Arial, Helvetica, sans-serif;
+        max-width: 850px;
         margin: auto;
         box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+        min-height: 1050px;
     }
     
-    /* PRINT MEDIA STYLING - FOR PERFECT A4 FULL PAGE PRINT */
+    /* PRINT MEDIA STYLING - FULL A4 COVERAGE */
     @media print {
         body * {
             visibility: hidden !important;
@@ -48,7 +49,7 @@ st.markdown("""
         }
         @page {
             size: A4 portrait;
-            margin: 10mm 12mm;
+            margin: 15mm 18mm;
         }
         [data-testid="stSidebar"], .main-title, .stButton, button, iframe {
             display: none !important;
@@ -106,27 +107,27 @@ photo_html = ""
 if photo_file is not None:
     bytes_data = photo_file.getvalue()
     base64_image = base64.b64encode(bytes_data).decode()
-    photo_html = f'<img src="data:image/png;base64,{base64_image}" style="width: 100px; height: 120px; object-fit: cover; border: 1px solid #000; border-radius: 2px;">'
+    photo_html = f'<img src="data:image/png;base64,{base64_image}" style="width: 110px; height: 135px; object-fit: cover; border: 1px solid #000; border-radius: 2px;">'
 else:
-    photo_html = '<div style="width: 100px; height: 120px; border: 1px dashed #666; display: flex; align-items: center; justify-content: center; font-size: 10px; color: #666; text-align: center;">Passport<br>Photo</div>'
+    photo_html = '<div style="width: 110px; height: 135px; border: 1px dashed #444; display: flex; align-items: center; justify-content: center; font-size: 11px; color: #555; text-align: center; font-weight: 500;">Passport<br>Photo</div>'
 
 # Skills List
 skills_list = [s.strip() for s in skills.split(",") if s.strip()]
-skills_html = "".join([f"<li style='margin-bottom: 3px;'>{s}</li>" for s in skills_list])
+skills_html = "".join([f"<li style='margin-bottom: 6px;'>{s}</li>" for s in skills_list])
 
-# HTML Template (Exact Match to Original PDF Layout)
+# HTML Layout
 resume_body_html = f"""
 <div class="resume-card" id="resume-printable-area">
     <!-- Header with Photo -->
-    <table style="width: 100%; border-collapse: collapse; border-bottom: 2px solid #000; padding-bottom: 8px; margin-bottom: 12px;">
+    <table style="width: 100%; border-collapse: collapse; border-bottom: 2px solid #000; padding-bottom: 12px; margin-bottom: 20px;">
         <tr>
             <td style="vertical-align: top; border: none;">
-                <h1 style="margin: 0; font-size: 23px; font-weight: bold; color: #000; text-transform: uppercase;">{full_name}</h1>
-                <div style="font-size: 13.5px; font-weight: bold; color: #1D4ED8; margin-top: 3px;">{designation}</div>
-                <div style="font-size: 11px; color: #000; margin-top: 5px;"><b>Address:</b> {address}</div>
-                <div style="font-size: 11px; color: #000; margin-top: 3px;"><b>Phone:</b> {phone} &nbsp;|&nbsp; <b>Email:</b> {email}</div>
+                <h1 style="margin: 0; font-size: 26px; font-weight: bold; color: #000; letter-spacing: 0.5px; text-transform: uppercase;">{full_name}</h1>
+                <div style="font-size: 15px; font-weight: bold; color: #1D4ED8; margin-top: 5px;">{designation}</div>
+                <div style="font-size: 12.5px; color: #000; margin-top: 8px; line-height: 1.4;"><b>Address:</b> {address}</div>
+                <div style="font-size: 12.5px; color: #000; margin-top: 4px;"><b>Phone:</b> {phone} &nbsp;|&nbsp; <b>Email:</b> {email}</div>
             </td>
-            <td style="width: 110px; text-align: right; vertical-align: top; border: none;">
+            <td style="width: 120px; text-align: right; vertical-align: top; border: none;">
                 {photo_html}
             </td>
         </tr>
@@ -136,75 +137,89 @@ resume_body_html = f"""
     <table style="width: 100%; border-collapse: collapse; table-layout: fixed;">
         <tr>
             <!-- Left Column -->
-            <td style="width: 50%; vertical-align: top; padding-right: 14px; border: none;">
+            <td style="width: 50%; vertical-align: top; padding-right: 20px; border: none;">
                 
-                <div style="font-weight: bold; font-size: 12px; border-bottom: 1px solid #000; margin-bottom: 6px; padding-bottom: 2px; text-transform: uppercase;">WORK EXPERIENCE</div>
+                <div style="font-weight: bold; font-size: 13.5px; border-bottom: 1.5px solid #000; margin-bottom: 10px; padding-bottom: 3px; text-transform: uppercase; letter-spacing: 0.5px;">WORK EXPERIENCE</div>
                 
-                <div style="font-size: 12px; font-weight: bold; color: #000;">{exp1_company}</div>
-                <div style="font-size: 11px; color: #1D4ED8; font-weight: bold; margin-bottom: 2px;">{exp1_duration}</div>
-                <div style="font-size: 11px; color: #333; margin-bottom: 10px; line-height: 1.35;">{exp1_desc}</div>
+                <div style="margin-bottom: 16px;">
+                    <div style="font-size: 13px; font-weight: bold; color: #000;">{exp1_company}</div>
+                    <div style="font-size: 12px; color: #1D4ED8; font-weight: bold; margin-top: 2px; margin-bottom: 4px;">{exp1_duration}</div>
+                    <div style="font-size: 12px; color: #222; line-height: 1.45;">{exp1_desc}</div>
+                </div>
 
-                <div style="font-size: 12px; font-weight: bold; color: #000;">{exp2_company}</div>
-                <div style="font-size: 11px; color: #1D4ED8; font-weight: bold; margin-bottom: 2px;">{exp2_duration}</div>
-                <div style="font-size: 11px; color: #333; margin-bottom: 12px; line-height: 1.35;">{exp2_desc}</div>
+                <div style="margin-bottom: 22px;">
+                    <div style="font-size: 13px; font-weight: bold; color: #000;">{exp2_company}</div>
+                    <div style="font-size: 12px; color: #1D4ED8; font-weight: bold; margin-top: 2px; margin-bottom: 4px;">{exp2_duration}</div>
+                    <div style="font-size: 12px; color: #222; line-height: 1.45;">{exp2_desc}</div>
+                </div>
 
-                <div style="font-weight: bold; font-size: 12px; border-bottom: 1px solid #000; margin-bottom: 6px; padding-bottom: 2px; text-transform: uppercase;">TECHNICAL QUALIFICATION</div>
-                <div style="font-size: 11.5px; font-weight: bold; color: #000;">{tech_qual}</div>
-                <div style="font-size: 11px; color: #444; margin-bottom: 12px;">{tech_qual_desc}</div>
+                <div style="font-weight: bold; font-size: 13.5px; border-bottom: 1.5px solid #000; margin-bottom: 10px; padding-bottom: 3px; text-transform: uppercase; letter-spacing: 0.5px;">TECHNICAL QUALIFICATION</div>
+                <div style="margin-bottom: 22px;">
+                    <div style="font-size: 12.5px; font-weight: bold; color: #000;">{tech_qual}</div>
+                    <div style="font-size: 12px; color: #333; margin-top: 3px;">{tech_qual_desc}</div>
+                </div>
 
-                <div style="font-weight: bold; font-size: 12px; border-bottom: 1px solid #000; margin-bottom: 6px; padding-bottom: 2px; text-transform: uppercase;">PERSONAL DETAILS</div>
-                <table style="width: 100%; font-size: 11px; color: #000; border-collapse: collapse;">
-                    <tr><td style="width: 42%; padding: 1.5px 0; border: none;"><b>D.O.B:</b></td><td style="border: none;">{dob}</td></tr>
-                    <tr><td style="padding: 1.5px 0; border: none;"><b>Gender:</b></td><td style="border: none;">{gender}</td></tr>
-                    <tr><td style="padding: 1.5px 0; border: none;"><b>Father's Name:</b></td><td style="border: none;">{father_name}</td></tr>
-                    <tr><td style="padding: 1.5px 0; border: none;"><b>Languages:</b></td><td style="border: none;">{languages}</td></tr>
-                    <tr><td style="padding: 1.5px 0; border: none;"><b>Marital Status:</b></td><td style="border: none;">{marital_status}</td></tr>
-                    <tr><td style="padding: 1.5px 0; border: none;"><b>Nationality:</b></td><td style="border: none;">Indian</td></tr>
+                <div style="font-weight: bold; font-size: 13.5px; border-bottom: 1.5px solid #000; margin-bottom: 10px; padding-bottom: 3px; text-transform: uppercase; letter-spacing: 0.5px;">PERSONAL DETAILS</div>
+                <table style="width: 100%; font-size: 12px; color: #000; border-collapse: collapse;">
+                    <tr><td style="width: 44%; padding: 3px 0; border: none;"><b>D.O.B:</b></td><td style="border: none;">{dob}</td></tr>
+                    <tr><td style="padding: 3px 0; border: none;"><b>Gender:</b></td><td style="border: none;">{gender}</td></tr>
+                    <tr><td style="padding: 3px 0; border: none;"><b>Father's Name:</b></td><td style="border: none;">{father_name}</td></tr>
+                    <tr><td style="padding: 3px 0; border: none;"><b>Languages:</b></td><td style="border: none;">{languages}</td></tr>
+                    <tr><td style="padding: 3px 0; border: none;"><b>Marital Status:</b></td><td style="border: none;">{marital_status}</td></tr>
+                    <tr><td style="padding: 3px 0; border: none;"><b>Nationality:</b></td><td style="border: none;">Indian</td></tr>
                 </table>
 
             </td>
 
             <!-- Right Column -->
-            <td style="width: 50%; vertical-align: top; padding-left: 14px; border: none;">
+            <td style="width: 50%; vertical-align: top; padding-left: 20px; border: none;">
                 
-                <div style="font-weight: bold; font-size: 12px; border-bottom: 1px solid #000; margin-bottom: 6px; padding-bottom: 2px; text-transform: uppercase;">EDUCATION QUALIFICATION</div>
+                <div style="font-weight: bold; font-size: 13.5px; border-bottom: 1.5px solid #000; margin-bottom: 10px; padding-bottom: 3px; text-transform: uppercase; letter-spacing: 0.5px;">EDUCATION QUALIFICATION</div>
                 
-                <div style="font-size: 11.5px; font-weight: bold; color: #000;">Post Graduation (M.Sc)</div>
-                <div style="font-size: 11px; color: #444; margin-bottom: 6px;">{edu_pg}</div>
+                <div style="margin-bottom: 10px;">
+                    <div style="font-size: 12.5px; font-weight: bold; color: #000;">Post Graduation (M.Sc)</div>
+                    <div style="font-size: 12px; color: #333; margin-top: 2px;">{edu_pg}</div>
+                </div>
 
-                <div style="font-size: 11.5px; font-weight: bold; color: #000;">Graduation (B.Sc)</div>
-                <div style="font-size: 11px; color: #444; margin-bottom: 6px;">{edu_grad}</div>
+                <div style="margin-bottom: 10px;">
+                    <div style="font-size: 12.5px; font-weight: bold; color: #000;">Graduation (B.Sc)</div>
+                    <div style="font-size: 12px; color: #333; margin-top: 2px;">{edu_grad}</div>
+                </div>
 
-                <div style="font-size: 11.5px; font-weight: bold; color: #000;">Higher Secondary (12th - I.Sc)</div>
-                <div style="font-size: 11px; color: #444; margin-bottom: 6px;">{edu_12th}</div>
+                <div style="margin-bottom: 10px;">
+                    <div style="font-size: 12.5px; font-weight: bold; color: #000;">Higher Secondary (12th - I.Sc)</div>
+                    <div style="font-size: 12px; color: #333; margin-top: 2px;">{edu_12th}</div>
+                </div>
 
-                <div style="font-size: 11.5px; font-weight: bold; color: #000;">Secondary (10th)</div>
-                <div style="font-size: 11px; color: #444; margin-bottom: 12px;">{edu_10th}</div>
+                <div style="margin-bottom: 22px;">
+                    <div style="font-size: 12.5px; font-weight: bold; color: #000;">Secondary (10th)</div>
+                    <div style="font-size: 12px; color: #333; margin-top: 2px;">{edu_10th}</div>
+                </div>
 
-                <div style="font-weight: bold; font-size: 12px; border-bottom: 1px solid #000; margin-bottom: 6px; padding-bottom: 2px; text-transform: uppercase;">KEY COMPETENCIES</div>
-                <ul style="margin: 0 0 12px 0; padding-left: 16px; font-size: 11px; color: #000;">
+                <div style="font-weight: bold; font-size: 13.5px; border-bottom: 1.5px solid #000; margin-bottom: 10px; padding-bottom: 3px; text-transform: uppercase; letter-spacing: 0.5px;">KEY COMPETENCIES</div>
+                <ul style="margin: 0 0 22px 0; padding-left: 18px; font-size: 12px; color: #000; line-height: 1.4;">
                     {skills_html}
                 </ul>
 
-                <div style="font-weight: bold; font-size: 12px; border-bottom: 1px solid #000; margin-bottom: 6px; padding-bottom: 2px; text-transform: uppercase;">HOBBIES & INTERESTS</div>
-                <div style="font-size: 11px; color: #000; margin-bottom: 12px;">{hobbies}</div>
+                <div style="font-weight: bold; font-size: 13.5px; border-bottom: 1.5px solid #000; margin-bottom: 10px; padding-bottom: 3px; text-transform: uppercase; letter-spacing: 0.5px;">HOBBIES & INTERESTS</div>
+                <div style="font-size: 12px; color: #000; margin-bottom: 15px; line-height: 1.4;">{hobbies}</div>
 
             </td>
         </tr>
     </table>
 
     <!-- Declaration -->
-    <div style="margin-top: 10px;">
-        <div style="font-weight: bold; font-size: 12px; border-bottom: 1px solid #000; margin-bottom: 6px; padding-bottom: 2px; text-transform: uppercase;">DECLARATION</div>
-        <div style="font-size: 10.5px; color: #333; font-style: italic;">I hereby declare that all the information provided above is true and correct to the best of my knowledge and belief.</div>
+    <div style="margin-top: 20px;">
+        <div style="font-weight: bold; font-size: 13.5px; border-bottom: 1.5px solid #000; margin-bottom: 8px; padding-bottom: 3px; text-transform: uppercase; letter-spacing: 0.5px;">DECLARATION</div>
+        <div style="font-size: 11.5px; color: #222; font-style: italic; line-height: 1.4;">I hereby declare that all the information provided above is true and correct to the best of my knowledge and belief.</div>
     </div>
 
     <!-- Signature Section -->
-    <div style="margin-top: 35px;">
-        <table style="width: 100%; font-size: 11.5px; border: none;">
+    <div style="margin-top: 50px;">
+        <table style="width: 100%; font-size: 12.5px; border: none;">
             <tr>
-                <td style="border: none; padding: 0;"><b>Place:</b> Saharsa<br><b>Date:</b> ___________</td>
-                <td style="border: none; padding: 0; text-align: right;"><b>({full_name})</b></td>
+                <td style="border: none; padding: 0;"><b>Place:</b> Saharsa<br><br><b>Date:</b> ___________</td>
+                <td style="border: none; padding: 0; text-align: right; vertical-align: bottom;"><b>({full_name})</b></td>
             </tr>
         </table>
     </div>
@@ -216,12 +231,12 @@ col_preview, col_space = st.columns([0.85, 0.15])
 with col_preview:
     st.markdown("<h3>👁️ Live Exact Preview</h3>", unsafe_allow_html=True)
     
-    # Direct Native Print Trigger Button
+    # Direct Print Trigger
     st.components.v1.html("""
-        <button onclick="window.parent.print()" style="background-color: #2563EB; color: white; border: none; padding: 11px 22px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 14px; box-shadow: 0 2px 4px rgba(0,0,0,0.2); margin-bottom: 15px;">
+        <button onclick="window.parent.print()" style="background-color: #2563EB; color: white; border: none; padding: 12px 24px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 15px; box-shadow: 0 2px 4px rgba(0,0,0,0.2); margin-bottom: 15px;">
             🖨️ Print / Save as PDF (Full A4)
         </button>
-    """, height=50)
+    """, height=55)
 
     # Render Preview
     st.html(resume_body_html)
