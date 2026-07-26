@@ -9,12 +9,6 @@ st.set_page_config(
 # Custom Styling for Professional Webpage Theme
 st.markdown("""
     <style>
-    @media print {
-        .no-print, [data-testid="stSidebar"], header { display: none !important; }
-        .main { background-color: white !important; padding: 0 !important; }
-        .resume-card { border: none !important; box-shadow: none !important; margin: 0 !important; padding: 0 !important; }
-    }
-    
     .main-title {
         color: #1E3A8A;
         font-weight: 700;
@@ -51,7 +45,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # Header Section
-st.markdown("<h2 class='main-title no-print'>📄 Professional Resume Builder</h2>", unsafe_allow_html=True)
+st.markdown("<h2 class='main-title'>📄 Professional Resume Builder</h2>", unsafe_allow_html=True)
 
 # --- SIDEBAR: INPUT DETAILS ---
 with st.sidebar:
@@ -92,27 +86,15 @@ with st.sidebar:
     skills = st.text_area("Key Competencies", "Medicine & Pharma Knowledge, Technical Marketing & Sales, Computer Operations, Client Relationship Management", height=80)
     hobbies = st.text_input("Hobbies & Interests", "Watching news & engaged in creative activities.")
 
-
 # --- MAIN CONTENT AREA: LIVE PREVIEW & PRINT ---
 col_preview, col_space = st.columns([0.85, 0.15])
 
-with col_preview:
-    st.markdown("<div class='no-print' style='display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;'><h3>👁️ Live Exact Preview</h3></div>", unsafe_allow_html=True)
-    
-    # Print Button Widget
-    st.components.v1.html("""
-        <button onclick="window.parent.print()" style="background-color: #2563EB; color: white; border: none; padding: 10px 20px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 14px;">
-            🖨️ Print / Download PDF
-        </button>
-    """, height=45)
+skills_list = [s.strip() for s in skills.split(",") if s.strip()]
+skills_html = "".join([f"<li style='margin-bottom: 3px;'>{s}</li>" for s in skills_list])
 
-    # Skills HTML List Processing
-    skills_list = [s.strip() for s in skills.split(",") if s.strip()]
-    skills_html = "".join([f"<li style='margin-bottom: 3px;'>{s}</li>" for s in skills_list])
-
-    # Resume Document HTML Structure
-    resume_document = f"""
-    <div class="resume-card">
+# Resume Body HTML
+resume_body_html = f"""
+    <div class="resume-card" id="resume-printable-area">
         <div class="resume-header">
             <h2 style="margin: 0; font-size: 24px; color: #111827; text-transform: uppercase; letter-spacing: 0.5px;">{full_name}</h2>
             <h4 style="margin: 4px 0 10px 0; color: #2563EB; font-weight: 600; font-size: 15px;">{designation}</h4>
@@ -161,6 +143,40 @@ with col_preview:
             </tr>
         </table>
     </div>
-    """
+"""
 
-    st.html(resume_document)
+with col_preview:
+    st.markdown("<div style='display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;'><h3>👁️ Live Exact Preview</h3></div>", unsafe_allow_html=True)
+    
+    # Clean Print Mechanism Script
+    st.components.v1.html(f"""
+        <script>
+        function printResume() {{
+            var content = `{resume_body_html}`;
+            var printWindow = window.open('', '', 'height=800,width=900');
+            printWindow.document.write('<html><head><title>Print Resume</title>');
+            printWindow.document.write('<style>');
+            printWindow.document.write(`
+                body {{ font-family: Arial, sans-serif; padding: 20px; }}
+                .resume-card {{ background-color: #fff; padding: 20px; color: #1f2937; }}
+                .resume-header {{ border-bottom: 2px solid #1E3A8A; padding-bottom: 12px; margin-bottom: 20px; }}
+                .section-title {{ font-weight: bold; font-size: 14px; color: #1E3A8A; border-bottom: 1px solid #cbd5e1; margin-top: 18px; margin-bottom: 8px; text-transform: uppercase; }}
+            `);
+            printWindow.document.write('</style></head><body>');
+            printWindow.document.write(content);
+            printWindow.document.write('</body></html>');
+            printWindow.document.close();
+            printWindow.focus();
+            setTimeout(function() {{
+                printWindow.print();
+                printWindow.close();
+            }}, 500);
+        }}
+        </script>
+        <button onclick="printResume()" style="background-color: #2563EB; color: white; border: none; padding: 10px 20px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 14px;">
+            🖨️ Print / Download PDF
+        </button>
+    """, height=50)
+
+    # Render Preview on Streamlit page
+    st.html(resume_body_html)
