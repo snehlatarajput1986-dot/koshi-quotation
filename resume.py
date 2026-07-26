@@ -16,9 +16,9 @@ st.markdown("""
 .main-title { color: #0f172a; font-weight: 700; margin-bottom: 15px; }
 
 #printableArea {
-    background-color: #ffffff;
+    background-color: #ffffff !important;
     width: 790px;
-    padding: 20px;
+    padding: 22px;
     margin: auto;
     box-sizing: border-box;
     font-family: 'Inter', sans-serif;
@@ -184,7 +184,7 @@ else:
 skills_list = [s.strip() for s in skills.split(",") if s.strip()]
 skills_html = "".join([f"<li>{s}</li>" for s in skills_list])
 
-# Perfect 1-Click PDF Downloader Engine using html2pdf.js
+# Enhanced Canvas HTML-to-PDF Downloader with Background Retention
 st.components.v1.html("""
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 <button onclick="downloadPDF()" style="background-color: #0284c7; color: white; border: none; padding: 12px 28px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 16px; box-shadow: 0 4px 10px rgba(0,0,0,0.15);">
@@ -195,10 +195,10 @@ st.components.v1.html("""
 function downloadPDF() {
     const element = window.parent.document.getElementById('printableArea');
     const opt = {
-        margin:       [5, 5, 5, 5],
+        margin:       [4, 4, 4, 4],
         filename:     'Resume_Prashant_Kumar.pdf',
-        image:        { type: 'jpeg', quality: 0.98 },
-        html2canvas:  { scale: 2, useCORS: true, logging: false },
+        image:        { type: 'jpeg', quality: 1.0 },
+        html2canvas:  { scale: 3, useCORS: true, letterRendering: true, backgroundColor: '#ffffff' },
         jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
     };
     html2pdf().set(opt).from(element).save();
@@ -206,46 +206,46 @@ function downloadPDF() {
 </script>
 """, height=60)
 
-# Clean HTML
-html_content = f"""<div id="printableArea">
-<div class="resume-header">
+# Clean HTML with inline styles for color preservation
+html_content = f"""<div id="printableArea" style="background-color: #ffffff;">
+<div class="resume-header" style="background-color: #1e293b; color: #ffffff; border-radius: 6px; padding: 14px 18px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center;">
 <div class="header-info">
-<h1>{full_name}</h1>
-<div class="sub-title">{designation}</div>
-<div class="header-contact">📍 <b>Address:</b> {address}<br>📞 <b>Phone:</b> {phone} &nbsp;|&nbsp; ✉️ <b>Email:</b> {email}</div>
+<h1 style="margin: 0; font-size: 20px; font-weight: 700; color: #ffffff; text-transform: uppercase; letter-spacing: 0.5px;">{full_name}</h1>
+<div class="sub-title" style="color: #38bdf8; font-size: 12px; font-weight: 600; margin-top: 2px; margin-bottom: 6px;">{designation}</div>
+<div class="header-contact" style="font-size: 10.5px; color: #e2e8f0; line-height: 1.4;">📍 <b>Address:</b> {address}<br>📞 <b>Phone:</b> {phone} &nbsp;|&nbsp; ✉️ <b>Email:</b> {email}</div>
 </div>
-<div class="photo-box">{photo_html}</div>
+<div class="photo-box" style="width: 80px; height: 95px; border-radius: 4px; border: 2px solid #38bdf8; overflow: hidden; background-color: #0f172a; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">{photo_html}</div>
 </div>
 
 <table style="width: 100%; border-collapse: collapse; table-layout: fixed;">
 <tr>
 <td style="width: 50%; vertical-align: top; padding-right: 8px; border: none;">
 <div class="section-title">WORK EXPERIENCE</div>
-<div class="info-card">
+<div class="info-card" style="background-color: #f8fafc; border-radius: 4px; padding: 6px 8px; margin-bottom: 5px; border-left: 3px solid #0284c7;">
 <div class="info-card-title">{exp1_company}</div>
 <div class="info-card-sub">{exp1_duration}</div>
 <div class="info-card-desc">{exp1_desc}</div>
 </div>
-<div class="info-card">
+<div class="info-card" style="background-color: #f8fafc; border-radius: 4px; padding: 6px 8px; margin-bottom: 5px; border-left: 3px solid #0284c7;">
 <div class="info-card-title">{exp2_company}</div>
 <div class="info-card-sub">{exp2_duration}</div>
 <div class="info-card-desc">{exp2_desc}</div>
 </div>
 
 <div class="section-title">EDUCATION QUALIFICATION</div>
-<div class="info-card">
+<div class="info-card" style="background-color: #f8fafc; border-radius: 4px; padding: 6px 8px; margin-bottom: 5px; border-left: 3px solid #0284c7;">
 <div class="info-card-title">Post Graduation (M.Sc)</div>
 <div class="info-card-sub" style="color: #475569; font-weight: normal;">{edu_pg}</div>
 </div>
-<div class="info-card">
+<div class="info-card" style="background-color: #f8fafc; border-radius: 4px; padding: 6px 8px; margin-bottom: 5px; border-left: 3px solid #0284c7;">
 <div class="info-card-title">Graduation (B.Sc)</div>
 <div class="info-card-sub" style="color: #475569; font-weight: normal;">{edu_grad}</div>
 </div>
-<div class="info-card">
+<div class="info-card" style="background-color: #f8fafc; border-radius: 4px; padding: 6px 8px; margin-bottom: 5px; border-left: 3px solid #0284c7;">
 <div class="info-card-title">Higher Secondary (12th - I.Sc)</div>
 <div class="info-card-sub" style="color: #475569; font-weight: normal;">{edu_12th}</div>
 </div>
-<div class="info-card">
+<div class="info-card" style="background-color: #f8fafc; border-radius: 4px; padding: 6px 8px; margin-bottom: 5px; border-left: 3px solid #0284c7;">
 <div class="info-card-title">Secondary (10th)</div>
 <div class="info-card-sub" style="color: #475569; font-weight: normal;">{edu_10th}</div>
 </div>
@@ -253,16 +253,16 @@ html_content = f"""<div id="printableArea">
 
 <td style="width: 50%; vertical-align: top; padding-left: 8px; border: none;">
 <div class="section-title">TECHNICAL QUALIFICATION</div>
-<div class="info-card">
+<div class="info-card" style="background-color: #f8fafc; border-radius: 4px; padding: 6px 8px; margin-bottom: 5px; border-left: 3px solid #0284c7;">
 <div class="info-card-title">{tech_qual}</div>
 <div class="info-card-desc" style="margin-top: 1px;">{tech_qual_desc}</div>
 </div>
 
 <div class="section-title">KEY COMPETENCIES</div>
-<ul class="competencies-list">{skills_html}</ul>
+<ul class="competencies-list" style="background-color: #f8fafc; border-radius: 4px; padding: 5px 8px 5px 20px; margin: 0 0 5px 0; border-left: 3px solid #0284c7; font-size: 10px; color: #334155;">{skills_html}</ul>
 
 <div class="section-title">PERSONAL DETAILS</div>
-<table class="personal-table">
+<table class="personal-table" style="background-color: #f8fafc; border-left: 3px solid #0284c7; border-radius: 4px; padding: 5px 6px;">
 <tr><td style="width: 40%;"><b>D.O.B:</b></td><td>{dob}</td></tr>
 <tr><td><b>Gender:</b></td><td>{gender}</td></tr>
 <tr><td><b>Father's Name:</b></td><td>{father_name}</td></tr>
@@ -272,14 +272,14 @@ html_content = f"""<div id="printableArea">
 </table>
 
 <div class="section-title">HOBBIES & INTERESTS</div>
-<div class="info-card">
+<div class="info-card" style="background-color: #f8fafc; border-radius: 4px; padding: 6px 8px; margin-bottom: 5px; border-left: 3px solid #0284c7;">
 <div class="info-card-desc" style="color: #1e293b;">{hobbies}</div>
 </div>
 </td>
 </tr>
 </table>
 
-<div class="declaration-box">
+<div class="declaration-box" style="background-color: #f8fafc; border-radius: 4px; padding: 6px 8px; margin-top: 8px; border: 1px solid #e2e8f0;">
 <div style="font-size: 10px; font-weight: 700; color: #1e293b; margin-bottom: 2px;">Declaration</div>
 <div style="font-size: 9.5px; color: #475569; font-style: italic;">I hereby declare that all the information provided above is true and correct to the best of my knowledge and belief.</div>
 <table style="width: 100%; margin-top: 12px; font-size: 10px; color: #1e293b; border: none;">
