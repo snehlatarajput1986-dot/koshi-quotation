@@ -7,7 +7,7 @@ st.set_page_config(
     layout="wide"
 )
 
-# Custom Global Styling
+# Custom Styling with Absolute Print Control
 st.markdown("""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
@@ -25,7 +25,7 @@ st.markdown("""
     background-color: #ffffff;
     width: 100%;
     max-width: 800px;
-    padding: 20px 24px;
+    padding: 18px 22px;
     margin: auto;
     box-sizing: border-box;
     font-family: 'Inter', -apple-system, sans-serif;
@@ -38,8 +38,8 @@ st.markdown("""
     background-color: #1e293b !important;
     color: #ffffff !important;
     border-radius: 6px;
-    padding: 16px 20px;
-    margin-bottom: 14px;
+    padding: 14px 18px;
+    margin-bottom: 10px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -48,7 +48,7 @@ st.markdown("""
 }
 .header-info h1 {
     margin: 0;
-    font-size: 22px;
+    font-size: 20px;
     font-weight: 700;
     color: #ffffff !important;
     text-transform: uppercase;
@@ -56,20 +56,20 @@ st.markdown("""
 }
 .header-info .sub-title {
     color: #38bdf8 !important;
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 600;
     margin-top: 2px;
-    margin-bottom: 8px;
+    margin-bottom: 6px;
 }
 .header-contact {
-    font-size: 11px;
+    font-size: 10.5px;
     color: #e2e8f0 !important;
-    line-height: 1.5;
+    line-height: 1.4;
 }
 
 .photo-box {
-    width: 90px;
-    height: 110px;
+    width: 85px;
+    height: 100px;
     border-radius: 4px;
     border: 2px solid #38bdf8;
     overflow: hidden;
@@ -86,89 +86,98 @@ st.markdown("""
 }
 
 .section-title {
-    font-size: 11.5px;
+    font-size: 11px;
     font-weight: 700;
     color: #0f172a;
     text-transform: uppercase;
     letter-spacing: 0.5px;
     border-bottom: 2px solid #0284c7;
     padding-bottom: 2px;
-    margin-bottom: 8px;
-    margin-top: 10px;
+    margin-bottom: 6px;
+    margin-top: 8px;
 }
 
 .info-card {
     background-color: #f8fafc !important;
     border-radius: 4px;
-    padding: 7px 10px;
-    margin-bottom: 7px;
+    padding: 6px 8px;
+    margin-bottom: 5px;
     border-left: 3px solid #0284c7 !important;
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
 }
 .info-card-title {
-    font-size: 11.5px;
+    font-size: 11px;
     font-weight: 700;
     color: #0f172a;
 }
 .info-card-sub {
-    font-size: 10.5px;
+    font-size: 10px;
     color: #0284c7;
     font-weight: 600;
     margin-top: 1px;
     margin-bottom: 2px;
 }
 .info-card-desc {
-    font-size: 10.5px;
+    font-size: 10px;
     color: #475569;
-    line-height: 1.35;
+    line-height: 1.3;
 }
 
 .competencies-list {
     background-color: #f8fafc !important;
     border-radius: 4px;
-    padding: 6px 10px 6px 22px;
-    margin: 0 0 7px 0;
+    padding: 5px 8px 5px 20px;
+    margin: 0 0 5px 0;
     border-left: 3px solid #0284c7 !important;
-    font-size: 10.5px;
+    font-size: 10px;
     color: #334155;
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
 }
 .competencies-list li {
-    margin-bottom: 3px;
+    margin-bottom: 2px;
 }
 
 .personal-table {
     width: 100%;
-    font-size: 10.5px;
+    font-size: 10px;
     color: #334155;
     border-collapse: collapse;
     background-color: #f8fafc !important;
     border-radius: 4px;
-    padding: 6px 8px;
+    padding: 5px 6px;
     border-left: 3px solid #0284c7 !important;
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
 }
 .personal-table td {
-    padding: 2px 4px;
+    padding: 2px 3px;
 }
 
 .declaration-box {
     background-color: #f8fafc !important;
     border-radius: 4px;
-    padding: 8px 10px;
-    margin-top: 10px;
+    padding: 6px 8px;
+    margin-top: 8px;
     border: 1px solid #e2e8f0;
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
 }
 
+/* HIGH-PRECISION PRINT MEDIA RULES */
 @media print {
     @page {
         size: A4 portrait;
-        margin: 8mm !important;
+        margin: 5mm !important;
+    }
+    html, body {
+        height: 100%;
+        margin: 0 !important;
+        padding: 0 !important;
+        background: #ffffff !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
     }
     body * {
         visibility: hidden;
@@ -249,14 +258,14 @@ else:
 skills_list = [s.strip() for s in skills.split(",") if s.strip()]
 skills_html = "".join([f"<li>{s}</li>" for s in skills_list])
 
-# Direct Print Trigger Button
+# Print Button
 st.components.v1.html("""
 <button onclick="window.parent.print()" style="background-color: #0284c7; color: white; border: none; padding: 10px 24px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 15px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); margin-bottom: 10px;">
     🖨️ Print / Save as PDF
 </button>
 """, height=50)
 
-# Unindented Flat String (Strictly Avoids Markdown Code Block Rendering)
+# Single Page Fit Flat HTML
 html_content = f"""<div id="printableArea">
 <div class="resume-header">
 <div class="header-info">
@@ -269,7 +278,7 @@ html_content = f"""<div id="printableArea">
 
 <table style="width: 100%; border-collapse: collapse; table-layout: fixed;">
 <tr>
-<td style="width: 50%; vertical-align: top; padding-right: 10px; border: none;">
+<td style="width: 50%; vertical-align: top; padding-right: 8px; border: none;">
 <div class="section-title">WORK EXPERIENCE</div>
 <div class="info-card">
 <div class="info-card-title">{exp1_company}</div>
@@ -301,7 +310,7 @@ html_content = f"""<div id="printableArea">
 </div>
 </td>
 
-<td style="width: 50%; vertical-align: top; padding-left: 10px; border: none;">
+<td style="width: 50%; vertical-align: top; padding-left: 8px; border: none;">
 <div class="section-title">TECHNICAL QUALIFICATION</div>
 <div class="info-card">
 <div class="info-card-title">{tech_qual}</div>
@@ -313,7 +322,7 @@ html_content = f"""<div id="printableArea">
 
 <div class="section-title">PERSONAL DETAILS</div>
 <table class="personal-table">
-<tr><td style="width: 42%;"><b>D.O.B:</b></td><td>{dob}</td></tr>
+<tr><td style="width: 40%;"><b>D.O.B:</b></td><td>{dob}</td></tr>
 <tr><td><b>Gender:</b></td><td>{gender}</td></tr>
 <tr><td><b>Father's Name:</b></td><td>{father_name}</td></tr>
 <tr><td><b>Languages:</b></td><td>{languages}</td></tr>
@@ -330,9 +339,9 @@ html_content = f"""<div id="printableArea">
 </table>
 
 <div class="declaration-box">
-<div style="font-size: 11px; font-weight: 700; color: #1e293b; margin-bottom: 3px;">Declaration</div>
-<div style="font-size: 10px; color: #475569; font-style: italic;">I hereby declare that all the information provided above is true and correct to the best of my knowledge and belief.</div>
-<table style="width: 100%; margin-top: 20px; font-size: 10.5px; color: #1e293b; border: none;">
+<div style="font-size: 10px; font-weight: 700; color: #1e293b; margin-bottom: 2px;">Declaration</div>
+<div style="font-size: 9.5px; color: #475569; font-style: italic;">I hereby declare that all the information provided above is true and correct to the best of my knowledge and belief.</div>
+<table style="width: 100%; margin-top: 14px; font-size: 10px; color: #1e293b; border: none;">
 <tr>
 <td style="border: none; padding: 0;"><b>Place:</b> Saharsa<br><b>Date:</b> ___________</td>
 <td style="border: none; padding: 0; text-align: right; vertical-align: bottom;"><b>({full_name})</b></td>
