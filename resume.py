@@ -7,10 +7,9 @@ st.set_page_config(
     layout="wide"
 )
 
-# Custom Styling to match the EXACT original UI and Perfect A4 Print
+# Custom Styling to match the EXACT original UI
 st.markdown("""
     <style>
-    /* Global Reset & Base Fonts */
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
     
     .stApp {
@@ -19,16 +18,16 @@ st.markdown("""
     .main-title {
         color: #1e293b;
         font-weight: 700;
-        margin-bottom: 20px;
+        margin-bottom: 15px;
     }
 
-    /* Resume Container - Pixel Perfect Reproduction */
+    /* Resume Container */
     .resume-card {
         background-color: #ffffff;
         border-radius: 8px;
         padding: 24px;
         color: #1e293b;
-        font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        font-family: 'Inter', -apple-system, sans-serif;
         max-width: 800px;
         margin: auto;
         box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
@@ -162,35 +161,6 @@ st.markdown("""
         margin-top: 14px;
         border: 1px solid #e2e8f0;
     }
-
-    /* Perfect A4 Print Media Styles */
-    @media print {
-        @page {
-            size: A4 portrait;
-            margin: 8mm 10mm;
-        }
-        body {
-            background-color: #ffffff !important;
-            -webkit-print-color-adjust: exact !important;
-            print-color-adjust: exact !important;
-        }
-        [data-testid="stSidebar"], .main-title, button, .stButton, iframe {
-            display: none !important;
-        }
-        .main .block-container {
-            padding: 0 !important;
-            margin: 0 !important;
-            max-width: 100% !important;
-        }
-        .resume-card {
-            box-shadow: none !important;
-            border: none !important;
-            padding: 0 !important;
-            margin: 0 !important;
-            width: 100% !important;
-            max-width: 100% !important;
-        }
-    }
     </style>
 """, unsafe_allow_html=True)
 
@@ -222,7 +192,7 @@ with st.sidebar:
     edu_pg = st.text_input("M.Sc", "B.N.M.U Madhepura | Passed 2023")
     edu_grad = st.text_input("B.Sc", "B.N.M.U Madhepura | Passed 2020")
     edu_12th = st.text_input("12th", "B.S.E.B Patna | Passed 2016")
-    edu_10th = st.text_input("10th", "B.S.E.B Patna | Passed 2014")
+    edu_10th = st.text_input("10th", "B.S.E.B Patna Passed 2014")
 
     st.markdown("---")
     st.subheader("Technical & Competencies")
@@ -250,10 +220,8 @@ else:
 skills_list = [s.strip() for s in skills.split(",") if s.strip()]
 skills_html = "".join([f"<li>{s}</li>" for s in skills_list])
 
-# HTML Structure Matching Exact Original Layout
-resume_html = f"""
-<div class="resume-card" id="resume-printable-area">
-    
+# HTML Inner Content for Resume
+resume_inner_html = f"""
     <!-- Top Header Banner -->
     <div class="resume-header">
         <div class="header-info">
@@ -358,16 +326,152 @@ resume_html = f"""
             </tr>
         </table>
     </div>
-
-</div>
 """
 
-# Native Window Print Trigger Button
-st.components.v1.html("""
-    <button onclick="window.print()" style="background-color: #0284c7; color: white; border: none; padding: 12px 26px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 15px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); margin-bottom: 10px;">
+# Guaranteed Direct Window Print Script
+print_button_script = f"""
+    <script>
+    function triggerPrint() {{
+        var printWin = window.open('', '_blank', 'width=900,height=1000');
+        printWin.document.open();
+        printWin.document.write(`
+            <!DOCTYPE html>
+            <html>
+            <head>
+                <title>Resume - {full_name}</title>
+                <style>
+                    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+                    @page {{
+                        size: A4 portrait;
+                        margin: 10mm;
+                    }}
+                    body {{
+                        font-family: 'Inter', sans-serif;
+                        margin: 0;
+                        padding: 0;
+                        background: #ffffff;
+                        -webkit-print-color-adjust: exact !important;
+                        print-color-adjust: exact !important;
+                    }}
+                    .resume-card {{
+                        width: 100%;
+                        background: #ffffff;
+                    }}
+                    .resume-header {{
+                        background-color: #1e293b !important;
+                        color: #ffffff !important;
+                        border-radius: 6px;
+                        padding: 16px 20px;
+                        margin-bottom: 16px;
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                    }}
+                    .header-info h1 {{
+                        margin: 0;
+                        font-size: 22px;
+                        font-weight: 700;
+                        color: #ffffff !important;
+                        text-transform: uppercase;
+                    }}
+                    .header-info .sub-title {{
+                        color: #38bdf8 !important;
+                        font-size: 13px;
+                        font-weight: 600;
+                        margin-top: 4px;
+                        margin-bottom: 8px;
+                    }}
+                    .header-contact {{
+                        font-size: 11px;
+                        color: #cbd5e1 !important;
+                        line-height: 1.5;
+                    }}
+                    .photo-box {{
+                        width: 95px;
+                        height: 115px;
+                        border-radius: 4px;
+                        border: 2px solid #38bdf8;
+                        overflow: hidden;
+                        background-color: #0f172a;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                    }}
+                    .photo-box img {{
+                        width: 100%;
+                        height: 100%;
+                        object-fit: cover;
+                    }}
+                    .section-title {{
+                        font-size: 12px;
+                        font-weight: 700;
+                        color: #1e293b;
+                        text-transform: uppercase;
+                        border-bottom: 2px solid #0284c7;
+                        padding-bottom: 3px;
+                        margin-bottom: 10px;
+                        margin-top: 12px;
+                    }}
+                    .info-card {{
+                        background-color: #f8fafc !important;
+                        border-radius: 4px;
+                        padding: 8px 10px;
+                        margin-bottom: 8px;
+                        border-left: 3px solid #0284c7 !important;
+                    }}
+                    .info-card-title {{ font-size: 12px; font-weight: 700; color: #0f172a; }}
+                    .info-card-sub {{ font-size: 10.5px; color: #0284c7; font-weight: 600; margin-top: 2px; }}
+                    .info-card-desc {{ font-size: 10.5px; color: #475569; line-height: 1.35; }}
+                    .competencies-list {{
+                        background-color: #f8fafc !important;
+                        border-radius: 4px;
+                        padding: 8px 10px 8px 24px;
+                        margin: 0 0 8px 0;
+                        border-left: 3px solid #0284c7 !important;
+                        font-size: 10.5px;
+                        color: #334155;
+                    }}
+                    .personal-table {{
+                        width: 100%;
+                        font-size: 10.5px;
+                        color: #334155;
+                        border-collapse: collapse;
+                        background-color: #f8fafc !important;
+                        border-radius: 4px;
+                        padding: 6px 10px;
+                        border-left: 3px solid #0284c7 !important;
+                    }}
+                    .personal-table td {{ padding: 2px 4px; }}
+                    .declaration-box {{
+                        background-color: #f8fafc !important;
+                        border-radius: 4px;
+                        padding: 8px 10px;
+                        margin-top: 10px;
+                        border: 1px solid #e2e8f0;
+                    }}
+                </style>
+            </head>
+            <body>
+                <div class="resume-card">
+                    {resume_inner_html}
+                </div>
+            </body>
+            </html>
+        `);
+        printWin.document.close();
+        printWin.focus();
+        setTimeout(function() {{
+            printWin.print();
+            printWin.close();
+        }}, 500);
+    }}
+    </script>
+    <button onclick="triggerPrint()" style="background-color: #0284c7; color: white; border: none; padding: 12px 28px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 15px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); margin-bottom: 15px;">
         🖨️ Print / Save as PDF
     </button>
-""", height=50)
+"""
 
-# Display Resume
-st.html(resume_html)
+st.components.v1.html(print_button_script, height=60)
+
+# Screen Preview Box
+st.html(f'<div class="resume-card">{resume_inner_html}</div>')
