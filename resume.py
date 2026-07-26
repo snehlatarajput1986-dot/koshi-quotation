@@ -1,4 +1,5 @@
 import streamlit as st
+import base64
 
 st.set_page_config(
     page_title="Resume Builder - Koshi Enterprises",
@@ -6,7 +7,7 @@ st.set_page_config(
     layout="wide"
 )
 
-# Custom Styling
+# Global Custom Styling & Print Rules for Exact A4 Fit
 st.markdown("""
     <style>
     .main-title {
@@ -18,12 +19,40 @@ st.markdown("""
         background-color: #ffffff;
         border: 1px solid #cbd5e1;
         border-radius: 4px;
-        padding: 25px 30px;
-        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        padding: 30px;
         color: #000000;
         font-family: Arial, Helvetica, sans-serif;
         max-width: 800px;
         margin: auto;
+        box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+    }
+    
+    /* PRINT MEDIA STYLING - FOR PERFECT A4 FULL PAGE PRINT */
+    @media print {
+        body * {
+            visibility: hidden !important;
+        }
+        #resume-printable-area, #resume-printable-area * {
+            visibility: visible !important;
+        }
+        #resume-printable-area {
+            position: absolute !important;
+            left: 0 !important;
+            top: 0 !important;
+            width: 100% !important;
+            max-width: none !important;
+            border: none !important;
+            box-shadow: none !important;
+            padding: 0 !important;
+            margin: 0 !important;
+        }
+        @page {
+            size: A4 portrait;
+            margin: 10mm 12mm;
+        }
+        [data-testid="stSidebar"], .main-title, .stButton, button, iframe {
+            display: none !important;
+        }
     }
     </style>
 """, unsafe_allow_html=True)
@@ -33,6 +62,8 @@ st.markdown("<h2 class='main-title'>📄 Professional Resume Builder</h2>", unsa
 # --- SIDEBAR INPUTS ---
 with st.sidebar:
     st.header("📝 Personal & Job Details")
+    
+    photo_file = st.file_uploader("Upload Passport Size Photo", type=["jpg", "jpeg", "png"])
     
     full_name = st.text_input("Full Name", "PRASHANT KUMAR")
     designation = st.text_input("Designation / Title", "Medical Representative & Sales Professional")
@@ -70,36 +101,52 @@ with st.sidebar:
     skills = st.text_area("Key Competencies (Comma Separated)", "Medicine & Pharma Knowledge, Technical Marketing & Sales, Computer Operations, Client Relationship Management", height=70)
     hobbies = st.text_input("Hobbies & Interests", "Watching news & engaged in creative activities.")
 
-# Format Skills List
+# Photo Base64 Processing
+photo_html = ""
+if photo_file is not None:
+    bytes_data = photo_file.getvalue()
+    base64_image = base64.b64encode(bytes_data).decode()
+    photo_html = f'<img src="data:image/png;base64,{base64_image}" style="width: 100px; height: 120px; object-fit: cover; border: 1px solid #000; border-radius: 2px;">'
+else:
+    photo_html = '<div style="width: 100px; height: 120px; border: 1px dashed #666; display: flex; align-items: center; justify-content: center; font-size: 10px; color: #666; text-align: center;">Passport<br>Photo</div>'
+
+# Skills List
 skills_list = [s.strip() for s in skills.split(",") if s.strip()]
 skills_html = "".join([f"<li style='margin-bottom: 3px;'>{s}</li>" for s in skills_list])
 
-# HTML Layout matching original PDF
+# HTML Template (Exact Match to Original PDF Layout)
 resume_body_html = f"""
 <div class="resume-card" id="resume-printable-area">
-    <!-- Header -->
-    <div style="border-bottom: 1.5px solid #000; padding-bottom: 6px; margin-bottom: 12px;">
-        <h1 style="margin: 0; font-size: 22px; font-weight: bold; color: #000; text-transform: uppercase;">{full_name}</h1>
-        <div style="font-size: 13px; font-weight: bold; color: #1D4ED8; margin-top: 2px;">{designation}</div>
-        <div style="font-size: 11px; color: #000; margin-top: 4px;"><b>Address:</b> {address}</div>
-        <div style="font-size: 11px; color: #000; margin-top: 2px;"><b>Phone:</b> {phone} &nbsp;|&nbsp; <b>Email:</b> {email}</div>
-    </div>
+    <!-- Header with Photo -->
+    <table style="width: 100%; border-collapse: collapse; border-bottom: 2px solid #000; padding-bottom: 8px; margin-bottom: 12px;">
+        <tr>
+            <td style="vertical-align: top; border: none;">
+                <h1 style="margin: 0; font-size: 23px; font-weight: bold; color: #000; text-transform: uppercase;">{full_name}</h1>
+                <div style="font-size: 13.5px; font-weight: bold; color: #1D4ED8; margin-top: 3px;">{designation}</div>
+                <div style="font-size: 11px; color: #000; margin-top: 5px;"><b>Address:</b> {address}</div>
+                <div style="font-size: 11px; color: #000; margin-top: 3px;"><b>Phone:</b> {phone} &nbsp;|&nbsp; <b>Email:</b> {email}</div>
+            </td>
+            <td style="width: 110px; text-align: right; vertical-align: top; border: none;">
+                {photo_html}
+            </td>
+        </tr>
+    </table>
 
-    <!-- 2 Column Table Layout -->
+    <!-- 2 Column Layout Table -->
     <table style="width: 100%; border-collapse: collapse; table-layout: fixed;">
         <tr>
             <!-- Left Column -->
-            <td style="width: 50%; vertical-align: top; padding-right: 12px; border: none;">
+            <td style="width: 50%; vertical-align: top; padding-right: 14px; border: none;">
                 
                 <div style="font-weight: bold; font-size: 12px; border-bottom: 1px solid #000; margin-bottom: 6px; padding-bottom: 2px; text-transform: uppercase;">WORK EXPERIENCE</div>
                 
                 <div style="font-size: 12px; font-weight: bold; color: #000;">{exp1_company}</div>
                 <div style="font-size: 11px; color: #1D4ED8; font-weight: bold; margin-bottom: 2px;">{exp1_duration}</div>
-                <div style="font-size: 11px; color: #333; margin-bottom: 10px; line-height: 1.3;">{exp1_desc}</div>
+                <div style="font-size: 11px; color: #333; margin-bottom: 10px; line-height: 1.35;">{exp1_desc}</div>
 
                 <div style="font-size: 12px; font-weight: bold; color: #000;">{exp2_company}</div>
                 <div style="font-size: 11px; color: #1D4ED8; font-weight: bold; margin-bottom: 2px;">{exp2_duration}</div>
-                <div style="font-size: 11px; color: #333; margin-bottom: 12px; line-height: 1.3;">{exp2_desc}</div>
+                <div style="font-size: 11px; color: #333; margin-bottom: 12px; line-height: 1.35;">{exp2_desc}</div>
 
                 <div style="font-weight: bold; font-size: 12px; border-bottom: 1px solid #000; margin-bottom: 6px; padding-bottom: 2px; text-transform: uppercase;">TECHNICAL QUALIFICATION</div>
                 <div style="font-size: 11.5px; font-weight: bold; color: #000;">{tech_qual}</div>
@@ -107,18 +154,18 @@ resume_body_html = f"""
 
                 <div style="font-weight: bold; font-size: 12px; border-bottom: 1px solid #000; margin-bottom: 6px; padding-bottom: 2px; text-transform: uppercase;">PERSONAL DETAILS</div>
                 <table style="width: 100%; font-size: 11px; color: #000; border-collapse: collapse;">
-                    <tr><td style="width: 40%; padding: 1px 0; border: none;"><b>D.O.B:</b></td><td style="border: none;">{dob}</td></tr>
-                    <tr><td style="padding: 1px 0; border: none;"><b>Gender:</b></td><td style="border: none;">{gender}</td></tr>
-                    <tr><td style="padding: 1px 0; border: none;"><b>Father's Name:</b></td><td style="border: none;">{father_name}</td></tr>
-                    <tr><td style="padding: 1px 0; border: none;"><b>Languages:</b></td><td style="border: none;">{languages}</td></tr>
-                    <tr><td style="padding: 1px 0; border: none;"><b>Marital Status:</b></td><td style="border: none;">{marital_status}</td></tr>
-                    <tr><td style="padding: 1px 0; border: none;"><b>Nationality:</b></td><td style="border: none;">Indian</td></tr>
+                    <tr><td style="width: 42%; padding: 1.5px 0; border: none;"><b>D.O.B:</b></td><td style="border: none;">{dob}</td></tr>
+                    <tr><td style="padding: 1.5px 0; border: none;"><b>Gender:</b></td><td style="border: none;">{gender}</td></tr>
+                    <tr><td style="padding: 1.5px 0; border: none;"><b>Father's Name:</b></td><td style="border: none;">{father_name}</td></tr>
+                    <tr><td style="padding: 1.5px 0; border: none;"><b>Languages:</b></td><td style="border: none;">{languages}</td></tr>
+                    <tr><td style="padding: 1.5px 0; border: none;"><b>Marital Status:</b></td><td style="border: none;">{marital_status}</td></tr>
+                    <tr><td style="padding: 1.5px 0; border: none;"><b>Nationality:</b></td><td style="border: none;">Indian</td></tr>
                 </table>
 
             </td>
 
             <!-- Right Column -->
-            <td style="width: 50%; vertical-align: top; padding-left: 12px; border: none;">
+            <td style="width: 50%; vertical-align: top; padding-left: 14px; border: none;">
                 
                 <div style="font-weight: bold; font-size: 12px; border-bottom: 1px solid #000; margin-bottom: 6px; padding-bottom: 2px; text-transform: uppercase;">EDUCATION QUALIFICATION</div>
                 
@@ -152,7 +199,7 @@ resume_body_html = f"""
         <div style="font-size: 10.5px; color: #333; font-style: italic;">I hereby declare that all the information provided above is true and correct to the best of my knowledge and belief.</div>
     </div>
 
-    <!-- Signatures -->
+    <!-- Signature Section -->
     <div style="margin-top: 35px;">
         <table style="width: 100%; font-size: 11.5px; border: none;">
             <tr>
@@ -167,60 +214,14 @@ resume_body_html = f"""
 col_preview, col_space = st.columns([0.85, 0.15])
 
 with col_preview:
-    st.markdown("<div style='display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;'><h3>👁️ Live Exact Preview</h3></div>", unsafe_allow_html=True)
+    st.markdown("<h3>👁️ Live Exact Preview</h3>", unsafe_allow_html=True)
     
-    # Precise Full-Page A4 Print Engine Script
-    st.components.v1.html(f"""
-        <script>
-        function printResume() {{
-            var content = `{resume_body_html}`;
-            var printWindow = window.open('', '_blank', 'width=1000,height=1000');
-            printWindow.document.write('<!DOCTYPE html><html><head><title>Print Resume</title>');
-            printWindow.document.write('<style>');
-            printWindow.document.write(`
-                @page {{
-                    size: A4 portrait;
-                    margin: 12mm 15mm;
-                }}
-                html, body {{
-                    width: 100%;
-                    height: 100%;
-                    margin: 0;
-                    padding: 0;
-                    background-color: #fff;
-                    font-family: Arial, Helvetica, sans-serif;
-                    -webkit-print-color-adjust: exact;
-                }}
-                .resume-card {{
-                    width: 100% !important;
-                    max-width: none !important;
-                    box-shadow: none !important;
-                    border: none !important;
-                    padding: 0 !important;
-                    margin: 0 !important;
-                }}
-                ul {{
-                    padding-left: 16px !important;
-                }}
-            `);
-            printWindow.document.write('</style></head><body>');
-            printWindow.document.write(content);
-            printWindow.document.write('</body></html>');
-            printWindow.document.close();
-            
-            printWindow.onload = function() {{
-                setTimeout(function() {{
-                    printWindow.focus();
-                    printWindow.print();
-                    printWindow.close();
-                }}, 300);
-            }};
-        }}
-        </script>
-        <button onclick="printResume()" style="background-color: #2563EB; color: white; border: none; padding: 11px 22px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 14px; box-shadow: 0 2px 4px rgba(0,0,0,0.2);">
-            🖨️ Print / Download PDF
+    # Direct Native Print Trigger Button
+    st.components.v1.html("""
+        <button onclick="window.parent.print()" style="background-color: #2563EB; color: white; border: none; padding: 11px 22px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 14px; box-shadow: 0 2px 4px rgba(0,0,0,0.2); margin-bottom: 15px;">
+            🖨️ Print / Save as PDF (Full A4)
         </button>
-    """, height=55)
+    """, height=50)
 
-    # Render Preview on Streamlit page
+    # Render Preview
     st.html(resume_body_html)
