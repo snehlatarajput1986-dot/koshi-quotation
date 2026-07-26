@@ -7,42 +7,39 @@ st.set_page_config(
     layout="wide"
 )
 
-# Custom Styling with Fixed Printable Scaling
+# Global Styling
 st.markdown("""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
 .stApp { background-color: #f1f5f9; }
-.main-title { color: #0f172a; font-weight: 700; margin-bottom: 10px; }
+.main-title { color: #0f172a; font-weight: 700; margin-bottom: 15px; }
 
 #printableArea {
     background-color: #ffffff;
-    width: 100%;
-    max-width: 800px;
-    padding: 14px 18px;
+    width: 790px;
+    padding: 20px;
     margin: auto;
     box-sizing: border-box;
-    font-family: 'Inter', -apple-system, sans-serif;
+    font-family: 'Inter', sans-serif;
     color: #1e293b;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-    border-radius: 6px;
+    border-radius: 4px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
 }
 
 .resume-header {
     background-color: #1e293b !important;
     color: #ffffff !important;
     border-radius: 6px;
-    padding: 12px 16px;
-    margin-bottom: 8px;
+    padding: 14px 18px;
+    margin-bottom: 12px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    -webkit-print-color-adjust: exact !important;
-    print-color-adjust: exact !important;
 }
 .header-info h1 {
     margin: 0;
-    font-size: 19px;
+    font-size: 20px;
     font-weight: 700;
     color: #ffffff !important;
     text-transform: uppercase;
@@ -50,20 +47,20 @@ st.markdown("""
 }
 .header-info .sub-title {
     color: #38bdf8 !important;
-    font-size: 11.5px;
+    font-size: 12px;
     font-weight: 600;
-    margin-top: 1px;
-    margin-bottom: 4px;
+    margin-top: 2px;
+    margin-bottom: 6px;
 }
 .header-contact {
-    font-size: 10px;
+    font-size: 10.5px;
     color: #e2e8f0 !important;
-    line-height: 1.35;
+    line-height: 1.4;
 }
 
 .photo-box {
-    width: 75px;
-    height: 90px;
+    width: 80px;
+    height: 95px;
     border-radius: 4px;
     border: 2px solid #38bdf8;
     overflow: hidden;
@@ -76,96 +73,57 @@ st.markdown("""
 .photo-box img { width: 100%; height: 100%; object-fit: cover; }
 
 .section-title {
-    font-size: 10.5px;
+    font-size: 11px;
     font-weight: 700;
     color: #0f172a;
     text-transform: uppercase;
     letter-spacing: 0.5px;
     border-bottom: 2px solid #0284c7;
-    padding-bottom: 1px;
-    margin-bottom: 4px;
-    margin-top: 6px;
+    padding-bottom: 2px;
+    margin-bottom: 6px;
+    margin-top: 8px;
 }
 
 .info-card {
     background-color: #f8fafc !important;
     border-radius: 4px;
-    padding: 5px 7px;
-    margin-bottom: 4px;
+    padding: 6px 8px;
+    margin-bottom: 5px;
     border-left: 3px solid #0284c7 !important;
-    -webkit-print-color-adjust: exact !important;
-    print-color-adjust: exact !important;
 }
-.info-card-title { font-size: 10.5px; font-weight: 700; color: #0f172a; }
-.info-card-sub { font-size: 9.5px; color: #0284c7; font-weight: 600; margin-top: 1px; margin-bottom: 1px; }
-.info-card-desc { font-size: 9.5px; color: #475569; line-height: 1.25; }
+.info-card-title { font-size: 11px; font-weight: 700; color: #0f172a; }
+.info-card-sub { font-size: 10px; color: #0284c7; font-weight: 600; margin-top: 1px; margin-bottom: 2px; }
+.info-card-desc { font-size: 10px; color: #475569; line-height: 1.3; }
 
 .competencies-list {
     background-color: #f8fafc !important;
     border-radius: 4px;
-    padding: 4px 6px 4px 18px;
-    margin: 0 0 4px 0;
+    padding: 5px 8px 5px 20px;
+    margin: 0 0 5px 0;
     border-left: 3px solid #0284c7 !important;
-    font-size: 9.5px;
+    font-size: 10px;
     color: #334155;
-    -webkit-print-color-adjust: exact !important;
-    print-color-adjust: exact !important;
 }
-.competencies-list li { margin-bottom: 1px; }
+.competencies-list li { margin-bottom: 2px; }
 
 .personal-table {
     width: 100%;
-    font-size: 9.5px;
+    font-size: 10px;
     color: #334155;
     border-collapse: collapse;
     background-color: #f8fafc !important;
     border-radius: 4px;
-    padding: 4px 5px;
+    padding: 5px 6px;
     border-left: 3px solid #0284c7 !important;
-    -webkit-print-color-adjust: exact !important;
-    print-color-adjust: exact !important;
 }
-.personal-table td { padding: 1px 3px; }
+.personal-table td { padding: 2px 3px; }
 
 .declaration-box {
     background-color: #f8fafc !important;
     border-radius: 4px;
-    padding: 5px 7px;
-    margin-top: 6px;
+    padding: 6px 8px;
+    margin-top: 8px;
     border: 1px solid #e2e8f0;
-    -webkit-print-color-adjust: exact !important;
-    print-color-adjust: exact !important;
-}
-
-/* COMPACT PRINT MEDIA WITH AUTO PAGE FIT */
-@media print {
-    @page {
-        size: A4 portrait;
-        margin: 0mm !important;
-    }
-    html, body {
-        height: 100%;
-        margin: 0 !important;
-        padding: 0 !important;
-        background: #ffffff !important;
-        -webkit-print-color-adjust: exact !important;
-        print-color-adjust: exact !important;
-    }
-    body * { visibility: hidden; }
-    #printableArea, #printableArea * { visibility: visible; }
-    #printableArea {
-        position: absolute;
-        left: 5%;
-        top: 2%;
-        width: 90% !important;
-        max-width: 100% !important;
-        padding: 0 !important;
-        margin: 0 !important;
-        box-shadow: none !important;
-        transform: scale(0.92);
-        transform-origin: top left;
-    }
-    [data-testid="stSidebar"], .stButton, header, footer, iframe { display: none !important; }
 }
 </style>
 """, unsafe_allow_html=True)
@@ -221,19 +179,34 @@ if photo_file is not None:
     base64_image = base64.b64encode(bytes_data).decode()
     photo_html = f'<img src="data:image/png;base64,{base64_image}">'
 else:
-    photo_html = '<div style="font-size:9px; color:#cbd5e1; text-align:center;">Passport<br>Photo</div>'
+    photo_html = '<div style="font-size:10px; color:#cbd5e1; text-align:center;">Passport<br>Photo</div>'
 
 skills_list = [s.strip() for s in skills.split(",") if s.strip()]
 skills_html = "".join([f"<li>{s}</li>" for s in skills_list])
 
-# Print Button
+# Perfect 1-Click PDF Downloader Engine using html2pdf.js
 st.components.v1.html("""
-<button onclick="window.parent.print()" style="background-color: #0284c7; color: white; border: none; padding: 10px 24px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 15px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); margin-bottom: 10px;">
-    🖨️ Print / Save as PDF
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+<button onclick="downloadPDF()" style="background-color: #0284c7; color: white; border: none; padding: 12px 28px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 16px; box-shadow: 0 4px 10px rgba(0,0,0,0.15);">
+    📥 Download 1-Page Perfect PDF
 </button>
-""", height=50)
 
-# Compact Flat HTML
+<script>
+function downloadPDF() {
+    const element = window.parent.document.getElementById('printableArea');
+    const opt = {
+        margin:       [5, 5, 5, 5],
+        filename:     'Resume_Prashant_Kumar.pdf',
+        image:        { type: 'jpeg', quality: 0.98 },
+        html2canvas:  { scale: 2, useCORS: true, logging: false },
+        jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+    };
+    html2pdf().set(opt).from(element).save();
+}
+</script>
+""", height=60)
+
+# Clean HTML
 html_content = f"""<div id="printableArea">
 <div class="resume-header">
 <div class="header-info">
@@ -246,7 +219,7 @@ html_content = f"""<div id="printableArea">
 
 <table style="width: 100%; border-collapse: collapse; table-layout: fixed;">
 <tr>
-<td style="width: 50%; vertical-align: top; padding-right: 6px; border: none;">
+<td style="width: 50%; vertical-align: top; padding-right: 8px; border: none;">
 <div class="section-title">WORK EXPERIENCE</div>
 <div class="info-card">
 <div class="info-card-title">{exp1_company}</div>
@@ -278,7 +251,7 @@ html_content = f"""<div id="printableArea">
 </div>
 </td>
 
-<td style="width: 50%; vertical-align: top; padding-left: 6px; border: none;">
+<td style="width: 50%; vertical-align: top; padding-left: 8px; border: none;">
 <div class="section-title">TECHNICAL QUALIFICATION</div>
 <div class="info-card">
 <div class="info-card-title">{tech_qual}</div>
@@ -307,9 +280,9 @@ html_content = f"""<div id="printableArea">
 </table>
 
 <div class="declaration-box">
-<div style="font-size: 9.5px; font-weight: 700; color: #1e293b; margin-bottom: 2px;">Declaration</div>
-<div style="font-size: 9px; color: #475569; font-style: italic;">I hereby declare that all the information provided above is true and correct to the best of my knowledge and belief.</div>
-<table style="width: 100%; margin-top: 10px; font-size: 9.5px; color: #1e293b; border: none;">
+<div style="font-size: 10px; font-weight: 700; color: #1e293b; margin-bottom: 2px;">Declaration</div>
+<div style="font-size: 9.5px; color: #475569; font-style: italic;">I hereby declare that all the information provided above is true and correct to the best of my knowledge and belief.</div>
+<table style="width: 100%; margin-top: 12px; font-size: 10px; color: #1e293b; border: none;">
 <tr>
 <td style="border: none; padding: 0;"><b>Place:</b> Saharsa<br><b>Date:</b> ___________</td>
 <td style="border: none; padding: 0; text-align: right; vertical-align: bottom;"><b>({full_name})</b></td>
