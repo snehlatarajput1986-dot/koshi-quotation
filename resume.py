@@ -2,33 +2,30 @@ import streamlit as st
 
 st.set_page_config(page_title="Resume Builder - Koshi Enterprises", page_icon="📄", layout="centered")
 
-# CSS for Print/Layout
+# Custom CSS for preview and print styling
 st.markdown("""
     <style>
     @media print {
         .no-print { display: none !important; }
-        .resume-page { border: none !important; box-shadow: none !important; }
+        .main { background-color: white !important; }
+        body { background-color: white !important; }
     }
-    .resume-page {
-        border: 1px solid #ccc;
+    .resume-container {
+        background-color: #ffffff;
         padding: 30px;
-        background-color: white;
-        color: black;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        color: #111;
         font-family: Arial, sans-serif;
-        border-radius: 5px;
     }
-    .resume-header {
-        border-bottom: 2px solid #333;
-        padding-bottom: 10px;
-        margin-bottom: 20px;
-    }
-    .section-title {
+    .section-head {
         font-weight: bold;
-        font-size: 16px;
-        border-bottom: 1px solid #666;
+        font-size: 15px;
+        border-bottom: 2px solid #333;
         margin-top: 15px;
-        margin-bottom: 10px;
+        margin-bottom: 8px;
         text-transform: uppercase;
+        color: #222;
     }
     </style>
 """, unsafe_allow_html=True)
@@ -78,68 +75,65 @@ st.markdown("---")
 st.markdown("<div class='no-print'><h3>👁️ Resume Live Preview</h3></div>", unsafe_allow_html=True)
 
 # Print Button
-st.markdown("""
-    <div class="no-print" style="margin-bottom: 20px;">
-        <button onclick="window.print()" style="background-color: #008CBA; color: white; padding: 12px 24px; border: none; border-radius: 5px; font-size: 16px; cursor: pointer; font-weight: bold;">
-            🖨️ Print / Download PDF
-        </button>
-    </div>
-""", unsafe_allow_html=True)
+st.components.v1.html("""
+    <button onclick="window.parent.print()" style="background-color: #008CBA; color: white; padding: 10px 20px; border: none; border-radius: 5px; font-size: 15px; cursor: pointer; font-weight: bold;">
+        🖨️ Print / Download PDF
+    </button>
+""", height=50)
 
-# Resume Layout
+# Render formatted Resume preview using st.html
 skills_list = [s.strip() for s in skills.split(",") if s.strip()]
 skills_html = "".join([f"<li>{s}</li>" for s in skills_list])
 
-resume_html = f"""
-<div class="resume-page">
-    <div class="resume-header">
-        <h2 style="margin:0; text-transform:uppercase;">{full_name}</h2>
-        <h4 style="margin:5px 0; color:#555;">{designation}</h4>
-        <p style="margin:2px 0; font-size:13px;">Address: {address}</p>
-        <p style="margin:2px 0; font-size:13px;">Phone: {phone} | Email: {email}</p>
+resume_code = f"""
+<div class="resume-container">
+    <div style="border-bottom: 2px solid #222; padding-bottom: 10px; margin-bottom: 15px;">
+        <h2 style="margin: 0; font-size: 24px; color: #111;">{full_name}</h2>
+        <h4 style="margin: 4px 0; color: #444; font-size: 16px;">{designation}</h4>
+        <p style="margin: 2px 0; font-size: 13px;"><b>Address:</b> {address}</p>
+        <p style="margin: 2px 0; font-size: 13px;"><b>Phone:</b> {phone} | <b>Email:</b> {email}</p>
     </div>
 
-    <div class="section-title">Work Experience</div>
-    <p style="margin:2px 0;"><b>{exp1_company}</b> ({exp1_duration})</p>
-    <p style="margin:2px 0 10px 0; font-size:13px;">{exp1_desc}</p>
-    
-    <p style="margin:2px 0;"><b>{exp2_company}</b> ({exp2_duration})</p>
-    <p style="margin:2px 0 10px 0; font-size:13px;">{exp2_desc}</p>
+    <div class="section-head">Work Experience</div>
+    <p style="margin: 3px 0 0 0; font-size: 14px;"><b>{exp1_company}</b> ({exp1_duration})</p>
+    <p style="margin: 2px 0 8px 0; font-size: 13px; color: #333;">{exp1_desc}</p>
+    <p style="margin: 3px 0 0 0; font-size: 14px;"><b>{exp2_company}</b> ({exp2_duration})</p>
+    <p style="margin: 2px 0 8px 0; font-size: 13px; color: #333;">{exp2_desc}</p>
 
-    <div class="section-title">Education Qualification</div>
-    <ul style="margin:0; padding-left:20px; font-size:13px;">
+    <div class="section-head">Education Qualification</div>
+    <ul style="margin: 0; padding-left: 20px; font-size: 13px;">
         <li><b>Post Graduation (M.Sc):</b> {edu_pg}</li>
         <li><b>Graduation (B.Sc):</b> {edu_grad}</li>
         <li><b>Higher Secondary (12th):</b> {edu_12th}</li>
         <li><b>Secondary (10th):</b> {edu_10th}</li>
     </ul>
 
-    <div class="section-title">Technical Qualification</div>
-    <p style="margin:2px 0; font-size:13px;">{tech_qual}</p>
+    <div class="section-head">Technical Qualification</div>
+    <p style="margin: 2px 0; font-size: 13px;">{tech_qual}</p>
 
-    <div class="section-title">Key Competencies</div>
-    <ul style="margin:0; padding-left:20px; font-size:13px;">
+    <div class="section-head">Key Competencies</div>
+    <ul style="margin: 0; padding-left: 20px; font-size: 13px;">
         {skills_html}
     </ul>
 
-    <div class="section-title">Personal Details</div>
-    <p style="margin:2px 0; font-size:13px;"><b>D.O.B:</b> {dob} | <b>Gender:</b> {gender} | <b>Father's Name:</b> {father_name}</p>
-    <p style="margin:2px 0; font-size:13px;"><b>Languages:</b> {languages} | <b>Marital Status:</b> {marital_status} | <b>Nationality:</b> Indian</p>
+    <div class="section-head">Personal Details</div>
+    <p style="margin: 2px 0; font-size: 13px;"><b>D.O.B:</b> {dob} | <b>Gender:</b> {gender} | <b>Father's Name:</b> {father_name}</p>
+    <p style="margin: 2px 0; font-size: 13px;"><b>Languages:</b> {languages} | <b>Marital Status:</b> {marital_status} | <b>Nationality:</b> Indian</p>
 
-    <div class="section-title">Hobbies & Interests</div>
-    <p style="margin:2px 0; font-size:13px;">{hobbies}</p>
+    <div class="section-head">Hobbies & Interests</div>
+    <p style="margin: 2px 0; font-size: 13px;">{hobbies}</p>
 
-    <div class="section-title">Declaration</div>
-    <p style="margin:2px 0; font-size:12px;">I hereby declare that all the information provided above is true and correct to the best of my knowledge and belief.</p>
+    <div class="section-head">Declaration</div>
+    <p style="margin: 2px 0; font-size: 12px; color: #444;">I hereby declare that all the information provided above is true and correct to the best of my knowledge and belief.</p>
     
-    <br>
-    <table width="100%" style="font-size:13px;">
+    <br><br>
+    <table width="100%" style="font-size:13px; border:none;">
         <tr>
-            <td><b>Place:</b> ___________<br><b>Date:</b> ___________</td>
-            <td align="right"><b>({full_name})</b></td>
+            <td style="border:none;"><b>Place:</b> Saharsa<br><b>Date:</b> ___________</td>
+            <td align="right" style="border:none;"><b>({full_name})</b></td>
         </tr>
     </table>
 </div>
 """
 
-st.markdown(resume_html, unsafe_allow_html=True)
+st.html(resume_code)
