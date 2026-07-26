@@ -65,7 +65,7 @@ col1, col2, col3, col4 = st.columns(4)
 with col1:
     st.markdown("<div class='metric-card'><small>System Status</small><h3>Active</h3></div>", unsafe_allow_html=True)
 with col2:
-    st.markdown("<div class='metric-card'><small>Available Tools</small><h3>3 Active</h3></div>", unsafe_allow_html=True)
+    st.markdown("<div class='metric-card'><small>Available Tools</small><h3>2 Active</h3></div>", unsafe_allow_html=True)
 with col3:
     st.markdown("<div class='metric-card'><small>Security Protocol</small><h3>SSL 256-bit</h3></div>", unsafe_allow_html=True)
 with col4:
@@ -73,28 +73,19 @@ with col4:
 
 st.markdown("<br><h3>⚡ Available Workspace Modules</h3>", unsafe_allow_html=True)
 
-# Module Cards Layout (3 Columns for 3 Tools)
-m_col1, m_col2, m_col3 = st.columns(3)
+# Module Cards Layout
+m_col1, m_col2 = st.columns(2)
 
 with m_col1:
     st.markdown("""
         <div class="module-card">
-            <h4>📊 Quotation Generator</h4>
-            <p style="font-size: 13px; color: #9CA3AF; height: 50px;">Quickly generate standard L1, L2, L3 quotation PDFs with automated pricing calculation and company layout.</p>
-            <a href="https://koshi-quotation.streamlit.app/" target="_blank" class="btn-link">Open Quotation Generator 🚀</a>
+            <h4>📊 Quotation & Letterhead Generator</h4>
+            <p style="font-size: 13px; color: #9CA3AF; height: 50px;">Generate standard L1, L2, L3 quotation PDFs and official Koshi Enterprises letterheads with automated layout.</p>
+            <a href="https://koshi-quotation-6q7gyn9uew5juafcpvroes.streamlit.app/" target="_blank" class="btn-link">Open Quotation Generator 🚀</a>
         </div>
     """, unsafe_allow_html=True)
 
 with m_col2:
-    st.markdown("""
-        <div class="module-card">
-            <h4>📄 Letterhead Generator</h4>
-            <p style="font-size: 13px; color: #9CA3AF; height: 50px;">Create official Koshi Enterprises letterhead documents with aligned headers, footer details, and printable formatting.</p>
-            <a href="https://koshi-letterhead.streamlit.app/" target="_blank" class="btn-link">Open Letterhead Generator 🚀</a>
-        </div>
-    """, unsafe_allow_html=True)
-
-with m_col3:
     st.markdown("""
         <div class="module-card">
             <h4>📝 Resume Builder</h4>
