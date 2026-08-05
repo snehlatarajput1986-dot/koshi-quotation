@@ -1,4 +1,5 @@
 import streamlit as st
+from num2words import num2words
 
 st.set_page_config(
     page_title="Koshi Enterprises - Workspace Portal",
@@ -170,8 +171,21 @@ if nav_selection == "🏠 Dashboard Home":
 
 elif nav_selection == "📊 Quotation Generator":
     st.header("📊 Quotation Generator Module")
-    st.markdown("Aap direct bhi link open kar sakte hain ya apna quotation tool yahan embed kar sakte hain:")
+    st.markdown("Aap direct main application bhi open kar sakte hain ya niche diye gaye live calculator ko test kar sakte hain:")
     st.markdown("[Click here to open Quotation App in New Tab](https://koshi-quotation-opgwbqipckeu9vji2vewe6.streamlit.app/)", unsafe_allow_html=True)
+    
+    st.markdown("---")
+    st.subheader("🧮 Quick Amount-in-Words Test Tool")
+    
+    # Interactive Amount to Words converter feature demonstration
+    entered_amount = st.number_input("Enter Total Quotation Amount (₹)", min_value=0, value=15500, step=100)
+    
+    try:
+        # Convert number to Indian English words format
+        words_output = num2words(entered_amount, lang='en_IN').title() + " Rupees Only"
+        st.success(f"**Amount in Words:** {words_output}")
+    except Exception as e:
+        st.error("Please enter a valid amount.")
 
 elif nav_selection == "📄 Letterhead Generator":
     st.header("📄 Letterhead Generator Module")
